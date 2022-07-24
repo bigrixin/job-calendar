@@ -1,0 +1,14 @@
+﻿[
+  {
+    "outputFile": "Content/Site.css",
+    "inputFile": "Content/Site.less"
+  },
+  {
+    "outputFile": "Content/_bootstrap-datetimepicker.css",
+    "inputFile": "Content/_bootstrap-datetimepicker.less"
+  },
+  {
+    "outputFile": "Content/bootstrap-datetimepicker.css",
+    "inputFile": "Content/bootstrap-datetimepicker.less"
+  }
+]

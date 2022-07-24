@@ -1,0 +1,144 @@
+﻿@model MyAbilityFirst.Domain.ClientFunctions.UpdateBookingViewModel
+@{
+	ViewBag.Title = "Booking";
+}
+<link href="~/Content/bootstrap-rating.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-rating/bootstrap-rating.min.js"></script>
+		<h2>Previous Booking details</h2>
+		<div class="card card-solid">
+			<dl class="dl-horizontal">
+				<dt>Carer Name</dt>
+				<dd>
+					@Model.CareWorkerFirstName  <span class="glyphicon glyphicon-map-marker" style="color:green"></span> @Model.Distance
+				</dd>
+
+				<dt>Start - End</dt>
+				<dd>
+					@Model.Schedule.Duration.Start - @Model.Schedule.Duration.End
+				</dd>
+
+				<dt>Message</dt>
+				<dd>
+					@Html.Raw(Html.Encode(Model.Message).Replace("\n", "<br />"))
+				</dd>
+				<dt>
+					Status
+				</dt>
+				<dd>
+					@{
+						@Html.Partial("_BookingStatus", Model.Status)
+						if (Model.Status.ToString() == "Requested")
+						{
+						@Model.Status.ToString() <span> - Waiting carer respond!</span>
+						}
+						if (Model.Status.ToString() == "Completed")
+						{
+						<span style="font-size:medium; color:orange">
+							@{
+								if (Model.Rating.SingleOrDefault() != null)
+								{
+								<span>&nbsp;&nbsp;</span>
+									Double rating = Convert.ToDouble(Model.Rating.SingleOrDefault().OverallScore);
+									@Html.BootstrapRating().Value(rating).ReadOnly
+									<span> </span>
+									@Html.ActionLink("Update", "UpdateRating", "Client", new { bookingId = Model.BookingID }, new { @class = "btn btn-defaut btn-sm", @title = "Rating details" })
+
+								}
+							}
+						</span>
+								}
+					}
+				</dd>
+
+				<dt></dt>
+				<dd>
+					@if (Model.Status.ToString() == "Requested")
+					{
+					@Html.ActionLink("Edit", "EditBooking", "Client", new { bookingID = Model.BookingID }, new { @class = "btn btn-primary btn-sm", @title = "Edit this booking" })
+					}
+					else if (Model.Status.ToString() == "Accepted")
+					{
+					@Html.ActionLink("Mark booking as completed", "CompleteBooking", new { bookingId = Model.BookingID }, new { @class = "btn btn-primary btn-sm", @title = "Mark as complete and rate!" })
+					}
+					else if (Model.Status.ToString() == "Rejected")
+					{
+					@Html.ActionLink("Cancel this booking", "CancelBooking", new { bookingId = Model.BookingID }, new { @class = "btn btn-primary btn-sm", @title = "Cancel this booking!" })
+					}
+				</dd>
+			</dl>
+
+			<hr />
+
+			<div>
+				<dl>
+					<dt>
+						<span class="label" style="font-size: 12px; color:cadetblue; background-color:blanchedalmond">
+							&nbsp; <b>Booking #@Model.BookingID Notes </b>
+						</span>
+					</dt>
+					<dd>
+						<div class="alert alert-warning" role="alert" style="overflow:auto; max-height:200px">
+						
+							@foreach (var item in Model.CaseNotes)
+							{
+								if (ViewBag.UserId == item.OwnerUserID)
+								{
+								<span style="color:darkseagreen"><b>Me:</b> @item.Note.ToString() (@item.CreatedAt)</span>
+								}
+								else if (Model.CareWorkerID == item.OwnerUserID)
+								{
+								<span style="color:chocolate"><b>Carer:</b> @item.Note.ToString() (@item.CreatedAt)</span>
+								}
+								else
+								{
+								<span style="color:lightskyblue"><b>* </b> @item.Note.ToString() (@item.CreatedAt)<b> *</b></span>
+								}
+								<br />
+							}
+							
+							@if (Model.PreviousBookingID != 0)
+							{
+							<span>
+								<br />
+							 	<<<a href="javascript:window.open('../'+@Model.PreviousBookingID,'','width=900, height=500')">Previous Notes</a>>>
+							</span>
+							}
+
+							<br />
+						</div>
+					</dd>
+				</dl>
+			</div>
+
+			@{
+				if (Model.Status.ToString() != "Completed" && Model.Status.ToString() != "Cancelled" && Model.Status.ToString() != "Pending" && Model.Status.ToString() != "Reassigned")
+				{
+					using (Html.BeginForm("Booking", "Client", FormMethod.Post, new { enctype = "multipart/form-data" }))
+					{
+					@Html.AntiForgeryToken()
+						@Html.HiddenFor(model => model.BookingID)
+						@Html.HiddenFor(model => model.OwnerUserID)
+						@Html.HiddenFor(model => model.Start)
+						@Html.HiddenFor(model => model.End)
+						@Html.HiddenFor(model => model.Message)
+						<div class="form-horizontal">
+							<div class="form-group">
+
+								<div class="col-md-12">
+									@Html.TextAreaFor(model => model.Note, new { @class = "form-control", @rows = "2", @placeholder = "Write message here and send to carer", @required = "required" })
+									@Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-md-12">
+									<input type="submit" value="Send" class="btn btn-primary" />
+								</div>
+							</div>
+
+						</div>
+					}
+				}
+			}
+		</div>
+

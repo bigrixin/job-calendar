@@ -1,0 +1,77 @@
+@model MyAbilityFirst.Models.SearchViewModel
+
+<div class="col-md-12" id="div-search-results">
+
+@if (Model.SearchResults != null)
+{
+	for (int i = 0; i < Model.SearchResults.Count; i++)
+	{
+	<br />
+
+		<div class="col-md-12" >
+			<div class="col-md-2">
+				@Html.Partial("ShortlistButton", new MyAbilityFirst.Models.ShortlistViewModel { SelectedUserID = Model.SearchResults[i].CareWorkerID, Selected = Model.SearchResults[i].Shortlisted ?? false })
+			</div>
+			<div class="col-md-10" name="SearchResults[@(i)].Html">
+				<img src=@Model.SearchResults[i].PictureURL class="media-object img-circle" alt="Sample Image" style="width:60px" title="see profile">
+				<ul style="list-style: none">
+					@if (Model.SearchResults[i].DistanceFromSearchInKm == null)
+					{
+						<li>@Html.ActionLink(Model.SearchResults[i].FirstName + " " + Model.SearchResults[i].LastName, "PublicProfile", "Profile", new { id = Model.SearchResults[i].CareWorkerID }, htmlAttributes: new { name = "SearchResults[" + i.ToString() + "].Name" })</li>
+					}
+					else
+					{
+						<li>@Html.ActionLink(Model.SearchResults[i].FirstName + " " + Model.SearchResults[i].LastName, "PublicProfile", "Profile", new { id = Model.SearchResults[i].CareWorkerID }, htmlAttributes: new { name = "SearchResults[" + i.ToString() + "].Name" })</li>
+						<li>@Html.ActionLink("(" + Math.Round((Double)Model.SearchResults[i].DistanceFromSearchInKm, 2) + "KM away)", "PublicProfile", "Profile", new { id = Model.SearchResults[i].CareWorkerID }, htmlAttributes: new { name = "SearchResults[" + i.ToString() + "].Name" })</li>
+					}
+					<li>@Html.DisplayFor(model => Model.SearchResults[i].Description)</li>
+					<li>&nbsp;</li>
+				</ul>
+			</div>
+		</div>
+		@Html.HiddenFor(SearchResults => Model.SearchResults[i].Longitude)
+		@Html.HiddenFor(SearchResults => Model.SearchResults[i].Latitude)
+	}
+
+	
+	<div>
+		<br />
+		@if (Model.SearchResults.TotalItemCount > 0)
+		{
+		<text> Showing @Model.SearchResults.FirstItemOnPage to @Model.SearchResults.LastItemOnPage of @Model.SearchResults.TotalItemCount Carers </text>
+
+			<br />
+			if (Model.SearchResults.PageNumber <= 1)
+			{
+			<button id="btn-last-page-search-results" type="button" class="btn btn-default" disabled="disabled">
+				<i class="glyphicon glyphicon-arrow-left"></i>
+			</button>
+			}
+			else
+			{
+			<button id="btn-last-page-search-results" type="button" class="btn btn-default"
+							onclick="searchResults(@Json.Encode(Model.SearchResults.PageNumber - 1), [populateMarkers()])">
+				<i class="glyphicon glyphicon-arrow-left"></i>
+			</button>
+			}
+
+			if (Model.SearchResults.PageNumber >= Model.SearchResults.PageCount)
+			{
+			<button id="btn-next-page-search-results" type="button" class="btn btn-default" disabled="disabled">
+				<i class="glyphicon glyphicon-arrow-right"></i>
+			</button>
+			}
+			else
+			{
+			<button id="btn-next-page-search-results" type="button" class="btn btn-default"
+							onclick="searchResults(@Json.Encode(Model.SearchResults.PageNumber + 1), [populateMarkers()])">
+				<i class="glyphicon glyphicon-arrow-right"></i>
+			</button>
+			}
+
+		}
+
+		</div>
+}
+
+</div>

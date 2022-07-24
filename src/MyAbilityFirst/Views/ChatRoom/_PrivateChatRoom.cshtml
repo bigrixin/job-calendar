@@ -1,0 +1,20 @@
+﻿@model MyAbilityFirst.Models.ChatRoomViewModel
+
+<div id="chatcontainer" class="round draggable chatcontainer" data-roomID=@Model.ChatRoomID data-recipientID=@Model.MessageRecipientID>
+	<div id="chattitle" class="chattitle">
+		To: @Model.RoomName
+		<a id="chatclose" data-roomID=@Model.ChatRoomID href="#"><i class="fa fa-times chatmenuicon" aria-hidden="true"></i></a>
+		<a id="chatmaximize" data-roomID=@Model.ChatRoomID href="#"><i class="fa fa-square chatmenuicon" aria-hidden="true"></i></a>
+		<a id="chatminimize" data-roomID=@Model.ChatRoomID href="#"><i class="fa fa-minus chatmenuicon" aria-hidden="true"></i></a>
+	</div>
+	<div id="chatcontent" class="chatcontent" data-roomID=@Model.ChatRoomID>
+		<div id="chatmessages" class="col-md-12 chatmessages" data-roomID=@Model.ChatRoomID data-pageNumber=@Model.PageNumber data-pageCount=@Model.PageCount>
+			@Html.Partial("_Messages", Model)
+		</div>
+		<div id="chattypingnotification" class="chattypingnotification"></div>
+		<div class="chatbar" id="chatbar">
+			@Html.EditorFor(model => model.Message, new { htmlAttributes = new { @class = "round", data_roomID = Model.ChatRoomID} })
+			<input class="round" type="button" id="sendmessage" value="Send" data-roomID=@Model.ChatRoomID />
+		</div>
+	</div>
+</div>

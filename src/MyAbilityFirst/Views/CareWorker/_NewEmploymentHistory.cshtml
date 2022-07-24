@@ -1,0 +1,63 @@
+﻿@model MyAbilityFirst.Models.CareWorkerDetailsViewModel
+
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+<script src="@Url.Content("~/Scripts/Shared/datepicker.js")" type="text/javascript"></script>
+
+<div>
+	@Html.HiddenFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].ID)
+	@Html.HiddenFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].CareWorkerID)
+	<div class="form-group">
+		@Html.LabelFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].CompanyName, htmlAttributes: new { @class = "control-label col-md-3" })
+		<div class="col-md-9">
+			@Html.EditorFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].CompanyName, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].CompanyName, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].CompanyName)
+	</div>
+	</div>
+	<div class="form-group">
+		@Html.LabelFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].PositionTitle, htmlAttributes: new { @class = "control-label col-md-3" })
+		<div class="col-md-9">
+			@Html.EditorFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].PositionTitle, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].PositionTitle, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].PositionTitle)
+	</div>
+	</div>
+	<div class="form-group">
+		@Html.LabelFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].StartMonth, htmlAttributes: new { @class = "control-label col-md-3" })
+		<div class="col-md-9">
+		@Html.EditorFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].StartMonth, new { htmlAttributes = new { @class = "form-control datepicker" } })
+		@Html.ValidationMessageFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].StartMonth, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].StartMonth)
+	</div>
+	</div>
+	<div class="form-group">
+		@Html.LabelFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].EndMonth, htmlAttributes: new { @class = "control-label col-md-3" })
+		<div class="col-md-9">
+		@Html.EditorFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].EndMonth, new { htmlAttributes = new { @class = "form-control datepicker" } })
+		@Html.ValidationMessageFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].EndMonth, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].EndMonth)
+	</div>
+	</div>
+	<div class="form-group">
+		@Html.LabelFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].Description, htmlAttributes: new { @class = "control-label col-md-3" })
+		<div class="col-md-9">
+		@Html.TextAreaFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].Description, htmlAttributes: new { @class = "form-control", @Rows = 4 })
+		@Html.ValidationMessageFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].Description, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.EmploymentHistories[Model.EmploymentHistories.Count() - 1].Description)
+	</div>
+</div>
+</div>
+<div id="div-new-employment-history">
+	<div class="col-md-12">
+		<button id="btn-add-employment-history" type="button" class="btn btn-default"
+						onclick="AJAXPostReplace(
+				'@(Url.Action("NewEmploymentHistory", "CareWorker", null))',
+				{EmploymentHistories: @Json.Encode(Model.EmploymentHistories)},
+				'#btn-add-employment-history',
+				'#div-new-employment-history',
+				[]
+				)">
+			<i class="glyphicon glyphicon-plus"></i> Add Employment History
+		</button>
+	</div>
+</div>

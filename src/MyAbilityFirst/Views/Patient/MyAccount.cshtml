@@ -1,0 +1,222 @@
+﻿@using MvcCheckBoxList.Model
+@model MyAbilityFirst.Models.PatientDetailsViewModel
+
+@{
+	ViewBag.Title = "MyAccount";
+}
+
+<div class="col-md-3">
+	@Html.Action("_MyAccountSidebar", "MyAccount")
+</div>
+
+<div class="col-md-9">
+
+	<div>
+		<h1 class="page-header">
+			Patient
+			@Html.ActionLink("Edit", "EditProfile", "Patient", new { patientID = Model.PatientID }, new { @class = "btn btn-default" })
+		</h1>
+	</div>
+
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.FirstName)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.FirstName)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.LastName)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.LastName)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Gender)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Gender)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.DoB)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.DoB)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Email)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Email)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Address)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Address.FullAddress)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Phone)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Phone)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Allergies)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Allergies)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.EmergencyResponse)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.EmergencyResponse)
+		</dd>
+
+		<dt>
+			@Html.DisplayName("Interest and Hobbies")
+		</dt>
+
+		<dd>
+			@Html.CheckBoxListFor(
+								model => model.PostedSubCategoryIDs,
+								model => model.InterestList,
+								item => item.ID,
+								item => item.Name,
+								model => model.PreviousInterestList,
+								Position.Horizontal,
+								x => new { disabled = "disabled" })
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.FirstLanguage)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.FirstLanguage)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.SecondLanguage)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.SecondLanguage)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Culture)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Culture)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Religion)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Religion)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.GoalsAndAspirations)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.GoalsAndAspirations)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.CareType)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.CareType)
+		</dd>
+
+		<dt>
+			@Html.DisplayName("Medical Needs")
+		</dt>
+
+		<dd>
+			@Html.CheckBoxListFor(
+								model => model.PostedSubCategoryIDs,
+								model => model.MedicalLivingNeedsList,
+								item => item.ID,
+								item => item.Name,
+								model => model.PreviousMedicalLivingNeedsList,
+								Position.Horizontal,
+								x => new { disabled = "disabled" })
+		</dd>
+
+		<dt>Documents</dt>
+		<dd>
+			@Html.ActionLink("Documents", "ManageAttachments", new { Model.PatientID })
+		</dd>
+
+		@foreach (var contact in Model.Contacts)
+		{
+		<dt>@Html.DisplayNameFor(model => contact.ContactName)</dt>
+										<dd>@Html.DisplayFor(model => contact.ContactName)</dd>
+
+										<dt>@Html.DisplayNameFor(model => contact.MobilePhone)</dt>
+										<dd>@Html.DisplayFor(model => contact.MobilePhone)</dd>
+
+										<dt>@Html.DisplayNameFor(model => contact.WorkPhone)</dt>
+										<dd>@Html.DisplayFor(model => contact.WorkPhone)</dd>
+
+										<dt>@Html.DisplayNameFor(model => contact.HomePhone)</dt>
+										<dd>@Html.DisplayFor(model => contact.HomePhone)</dd>
+
+										<dt>@Html.DisplayNameFor(model => contact.Email)</dt>
+										<dd>@Html.DisplayFor(model => contact.Email)</dd>
+
+										<dt>@Html.DisplayName("Relationship")</dt>
+										<dd>@Html.DisplayFor(model => model.RelationshipDropDownList.Where(ddl => ddl.Value == contact.RelationshipID.ToString()).First().Text)</dd>
+		}
+
+		<dt>
+			@Html.DisplayNameFor(model => model.HouseDetails)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.HouseDetails)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.MedicationDetails)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.MedicationDetails)
+		</dd>
+
+	</dl>
+
+	<div>
+		<h1 class="page-header">
+			@Html.ActionLink("Edit", "EditProfile", "Patient", new { patientID = Model.PatientID }, new { @class = "btn btn-default" })
+		</h1>
+	</div>
+
+</div>

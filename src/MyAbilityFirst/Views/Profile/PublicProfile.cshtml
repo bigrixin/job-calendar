@@ -1,0 +1,79 @@
+﻿@model MyAbilityFirst.Models.CareWorkerPublicProfileViewModel
+<link href="~/Content/bootstrap-rating.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-rating/bootstrap-rating.min.js"></script>
+
+<div class="col-md-3">
+	@Html.Action("_MyAccountSidebar", "MyAccount")
+</div>
+
+
+<div class="main-content-wrapper">
+
+	<h1>Profile: @Model.FirstName @Model.LastName </ h1 >
+	<span style="font-size:x-large; color:orange">
+		@Html.BootstrapRating(model => model.OverallRating).ReadOnly
+	</span>
+		@Html.Action("ShortlistButton", "Shortlist", new { selectedUserID = Model.CareWorkerID })
+		<span id="privatechatlink" data-recipientID=@Model.MessageRecipientID><i class="fa fa-comments" aria-hidden="true"></i></span>
+	<hr />
+
+		<div class="form-group col-md-12">
+			<div class="col-md-12">
+				<div id="map" class="form-group" style="height: 200px; width: 100%;"></div>
+			</div>
+			@Html.HiddenFor(model => model.HomeLatitude)
+			@Html.HiddenFor(model => model.HomeLongitude)
+			@Html.HiddenFor(model => model.LocationCoverageRadius)
+		</div>
+
+
+		<h3>Details</h3>
+
+		<div class="form-group col-md-12">
+			@Html.LabelFor(model => model.Description, new { @class = "col-md-3 control-label" })
+			<div class="col-sm-9">
+				@Html.DisplayFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+			</div>
+		</div>
+
+		<div class="form-group col-md-12">
+			@Html.LabelFor(model => model.Culture, new { @class = "col-md-3 control-label" })
+			<div class="col-sm-9">
+				@Html.DisplayFor(model => model.Culture, new { htmlAttributes = new { @class = "form-control" } })
+			</div>
+		</div>
+
+		<div class="form-group col-md-12">
+			@Html.LabelFor(model => model.Personality, new { @class = "col-md-3 control-label" })
+			<div class="col-sm-9">
+				@Html.DisplayFor(model => model.Personality, new { htmlAttributes = new { @class = "form-control" } })
+			</div>
+		</div>
+
+		<div class="form-group col-md-12">
+			@Html.LabelFor(model => model.OrganisationID, new { @class = "col-md-3 control-label" })
+			<div class="col-sm-9">
+				@{
+					String strPathAndQuery = HttpContext.Current.Request.Url.PathAndQuery;
+					String strUrl = HttpContext.Current.Request.Url.AbsoluteUri.Replace(strPathAndQuery, "/");
+				}
+				@if (!String.IsNullOrEmpty(Model.OrganisationLogoURL))
+			{
+			<div class="pull-left">
+				<img src="@Url.Content(strUrl+Model.OrganisationLogoURL)" id="pictureFileId" class="media-object" height="80" border="0">
+			</div>
+			}
+			</div>
+
+		</div>
+		<div class="form-group col-md-12">
+			@Html.LabelFor(model => model.StartingDate, new { @class = "col-md-3 control-label" })
+			<div class="col-sm-9">
+				@Html.DisplayFor(model => model.StartingDate, new { htmlAttributes = new { @class = "form-control", data_date_format = "DD MMM YYYY" } })
+			</div>
+		</div>
+
+</div>
+@section Scripts {
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLAHAeG9pD0ARapCn2AbSAcbYXaX0dUhQ&libraries=places&callback=initProfileMap" async defer></script>
+}

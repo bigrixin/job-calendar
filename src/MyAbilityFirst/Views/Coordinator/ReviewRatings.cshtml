@@ -1,0 +1,73 @@
+﻿@model IEnumerable<MyAbilityFirst.Models.BookingRatingsViewModel>
+<link href="~/Content/bootstrap-rating.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-rating/bootstrap-rating.min.js"></script>
+@{
+	ViewBag.Title = "Review Rating";
+}
+
+<style>
+	.container-fluid {
+		padding: 0px;
+	}
+</style>
+<div class="container-fluid">
+	<div class="navbar-left">
+		@Html.Partial("_LeftSideMenu")
+	</div>
+
+	<div class="main-content-wrapper">
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Review Client Rating</h2>
+				<div class="card card-solid">
+					<table class="table">
+						<tr>
+							<th>Booking ID</th>
+							<th>Client First Name</th>
+							<th>Carer First Name</th>
+							<th>Overall Score</th>
+							<th>Service At</th>
+							<th>Action</th>
+						</tr>
+
+						@foreach (var item in Model)
+						{
+						@Html.HiddenFor(modelItem => item.BookingID)
+							@Html.HiddenFor(modelItem => item.ClientID)
+							@Html.HiddenFor(modelItem => item.CareWorkerID)
+							@Html.HiddenFor(modelItem => item.RatingID)
+							<tr>
+								<td>
+									#	@Html.DisplayFor(modelItem => item.BookingID)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => item.ClientFirstName)
+								</td>
+								<td>
+									@{if (item.CareWorkerID != 0)
+										{
+										@Html.ActionLink(item.CareWorkerFirstName, "publicprofile", "profile", new { id = item.CareWorkerID }, null)
+										}
+									}
+								</td>
+								<td>
+									<span style="font-size:x-large; color:orange">
+										@Html.BootstrapRating(model => item.OverallScore).ReadOnly
+									</span>
+								</td>
+								<td>
+									@Convert.ToDateTime(item.CreatedAt).ToString("dd MMM yyyy")
+								</td>
+								<td>
+									@Html.ActionLink("Approve","ApproveRating", "Coordinator", new { ratingID = item.RatingID }, new { @class = "btn btn-primary btn-sm" })
+								</td>
+							</tr>
+										}
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

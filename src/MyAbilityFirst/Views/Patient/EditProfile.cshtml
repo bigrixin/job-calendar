@@ -1,0 +1,261 @@
+﻿@using MvcCheckBoxList.Model
+@model MyAbilityFirst.Models.PatientDetailsViewModel
+
+@{
+	ViewBag.Title = "Update Profile";
+}
+<script src="~/Scripts/Shared/datepicker-birthday.js"></script>
+<div class="navbar-left">
+	@Html.Action("_MyAccountSidebar", "MyAccount")
+</div>
+
+<div class="main-content-wrapper">
+	<div class="row">
+		<div class="col-md-12">
+			@using (Html.BeginForm("EditProfile", "Patient", FormMethod.Post, new { novalidate = "novalidate", @class = "form-horizontal" }))
+			{
+			@Html.AntiForgeryToken()
+
+				@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+				@Html.HiddenFor(model => model.PatientID)
+				@Html.HiddenFor(model => model.ClientID)
+
+				<h1>Update Patient</h1>
+
+				<div class="card card-solid">
+					<ul class="nav nav-tabs nav-wizard" role="tablist">
+						<li role="presentation" class="active"><a href="#patient-details" aria-controls="patient-details" role="tab" data-toggle="tab">Patient Details</a></li>
+						<li role="presentation"><a href="#background" aria-controls="background" role="tab" data-toggle="tab">Background</a></li>
+						<li role="presentation"><a href="#contact" aria-controls="contact" role="tab" data-toggle="tab">Contact Info</a></li>
+						<li role="presentation"><a href="#medical" aria-controls="medical" role="tab" data-toggle="tab">Medical Info</a></li>
+						<li role="presentation"><a href="@Url.Action("ManageAttachments", "Patient", new { patientID = Model.PatientID })" aria-controls="document">Support Documents</a></li>
+					</ul>
+
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane fade in active" id="patient-details">
+							<h3>Personal details</h3>
+							<hr />
+							<div class="form-group">
+								@Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-3" })
+								<div class="col-md-9">
+									@Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+								</div>
+							</div>
+
+							<div class="form-group">
+								@Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-3" })
+								<div class="col-md-9">
+									@Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+								</div>
+							</div>
+
+							<div class="form-group">
+								@Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-3" })
+								<div class="col-md-9">
+									@Html.DropDownListFor(model => model.GenderID, Model.GenderDropDownList, new { @class = "form-control" })
+									@Html.ValidationMessageFor(model => model.GenderID, "", new { @class = "text-danger" })
+								</div>
+							</div>
+
+							<div class="form-group">
+								@Html.LabelFor(model => model.DoB, htmlAttributes: new { @class = "control-label col-md-3" })
+								<div class="col-md-9">
+									<div class='input-group date' id="datepicker-birthday">
+										@Html.EditorFor(model => model.DoB, new { htmlAttributes = new { @class = "form-control", @id="birthday", placeholder = "Please enter the patient's birthday (DD/MM/YYYY)" } })
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+									@Html.ValidationMessageFor(model => model.DoB, "", new { @class = "text-danger" })
+								</div>
+							</div>
+
+							<div class="form-group">
+								@Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+								<div class="col-md-9">
+									@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+								</div>
+							</div>
+
+							<div class="form-group">
+								@Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-3" })
+								<div class="col-md-9">
+									@Html.EditorFor(model => model.Address)
+								</div>
+							</div>
+
+							<div class="form-group">
+								@Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-3" })
+								<div class="col-md-9">
+									@Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+									@Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+								</div>
+							</div>
+							</div>
+							<div role="tabpanel" class="tab-pane fade" id="background">
+								<h3>Personal background</h3>
+								<hr />
+								<div class="form-group">
+									@Html.LabelFor(model => model.FirstLanguage, htmlAttributes: new { @class = "control-label col-md-3" })
+									<div class="col-md-9">
+										@Html.DropDownListFor(model => model.FirstLanguageID, Model.LanguageDropDownList, new { @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.FirstLanguageID, "", new { @class = "text-danger" })
+									</div>
+								</div>
+
+								<div class="form-group">
+									@Html.LabelFor(model => model.SecondLanguage, htmlAttributes: new { @class = "control-label col-md-3" })
+									<div class="col-md-9">
+										@Html.DropDownListFor(model => model.SecondLanguageID, Model.LanguageDropDownList, new { @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.SecondLanguageID, "", new { @class = "text-danger" })
+									</div>
+								</div>
+
+								<div class="form-group">
+									@Html.LabelFor(model => model.Culture, htmlAttributes: new { @class = "control-label col-md-3" })
+									<div class="col-md-9">
+										@Html.DropDownListFor(model => model.CultureID, Model.CultureDropDownList, new { @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.CultureID, "", new { @class = "text-danger" })
+									</div>
+								</div>
+
+								<div class="form-group">
+									@Html.LabelFor(model => model.Religion, htmlAttributes: new { @class = "control-label col-md-3" })
+									<div class="col-md-9">
+										@Html.DropDownListFor(model => model.ReligionID, Model.ReligionDropDownList, new { @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.ReligionID, "", new { @class = "text-danger" })
+									</div>
+								</div>
+
+								<div class="form-group">
+									@Html.LabelFor(model => model.GoalsAndAspirations, htmlAttributes: new { @class = "control-label col-md-3" })
+									<div class="col-md-9">
+										@Html.EditorFor(model => model.GoalsAndAspirations, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.GoalsAndAspirations, "", new { @class = "text-danger" })
+									</div>
+								</div>
+							</div>
+
+							<div role="tabpanel" class="tab-pane fade" id="contact">
+								<h3>Contact details</h3>
+								<hr />
+								@Html.Partial("_Contacts")
+							</div>
+
+							<div role="tabpanel" class="tab-pane fade" id="medical">
+								<h3>Medical information</h3>
+								<hr />
+								<div class="form-group">
+									@Html.LabelFor(model => model.CareType, htmlAttributes: new { @class = "control-label col-md-3" })
+									<div class="col-md-9">
+										@Html.DropDownListFor(model => model.CareTypeID, Model.CareTypeDropDownList, new { @class = "form-control" })
+										@Html.ValidationMessageFor(model => model.CareTypeID, "", new { @class = "text-danger" })
+									</div>
+								</div>
+
+								<div class="form-group">
+									@Html.LabelFor(model => model.Allergies, htmlAttributes: new { @class = "control-label col-md-3" })
+									<div class="col-md-9">
+										@Html.EditorFor(model => model.Allergies, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.Allergies, "", new { @class = "text-danger" })
+									</div>
+								</div>
+
+								<div class="form-group">
+									@Html.LabelFor(model => model.EmergencyResponse, htmlAttributes: new { @class = "control-label col-md-3" })
+									<div class="col-md-9">
+										@Html.EditorFor(model => model.EmergencyResponse, new { htmlAttributes = new { @class = "form-control" } })
+										@Html.ValidationMessageFor(model => model.EmergencyResponse, "", new { @class = "text-danger" })
+									</div>
+								</div>
+
+								<div class="form-group">
+									@Html.Label("Interest and Hobbies", htmlAttributes: new { @class = "control-label col-md-3" })
+									<div class="col-md-9">
+										@{ var htmlListInfoForHobbies = new HtmlListInfo(HtmlTag.table, 3, new
+											{
+												@class = "checkBoxListStyle",
+												@style = "display: inline;"
+											}, TextLayout.Default, TemplateIsUsed.No);}
+										@Html.CheckBoxListFor(
+											 model => model.PostedSubCategoryIDs,
+											 model => model.InterestList,
+											 item => item.ID,
+											 item => item.Name,
+											 model => model.PreviousInterestList,
+								 			 htmlListInfoForHobbies)
+									</div>
+								</div>
+
+								<div class="form-group">
+									@Html.Label("Medical Needs", htmlAttributes: new { @class = "control-label col-md-3" })
+									<div class="col-md-9">
+										@{ var htmlListInfoForMecical = new HtmlListInfo(HtmlTag.table, 2, new
+											{
+												@class = "checkBoxListStyle",
+												@style = "display: inline;"
+											}, TextLayout.Default, TemplateIsUsed.No);}
+										@Html.CheckBoxListFor(
+											 model => model.PostedSubCategoryIDs,
+											 model => model.MedicalLivingNeedsList,
+											 item => item.ID,
+											 item => item.Name,
+											 model => model.PreviousMedicalLivingNeedsList,
+											 htmlListInfoForMecical)
+									</div>
+								</div>
+
+								<div class="form-group">
+									@Html.LabelFor(model => model.HouseDetails, new { @class = "control-label col-md-3" })
+									<div class="col-md-9">
+										@Html.CheckBoxFor(m => m.HouseDetails.HasAdequateAccess)
+										@Html.LabelFor(m => m.HouseDetails.HasAdequateAccess)<br />
+										@Html.CheckBoxFor(m => m.HouseDetails.HasStreetParking)
+										@Html.LabelFor(m => m.HouseDetails.HasStreetParking)<br />
+										@Html.CheckBoxFor(m => m.HouseDetails.HasSmokersLivingIn)
+										@Html.LabelFor(m => m.HouseDetails.HasSmokersLivingIn)<br />
+										@Html.LabelFor(m => m.HouseDetails.SpecialInstructions)<br />
+										@Html.TextBoxFor(m => m.HouseDetails.SpecialInstructions, new { @class = "form-control" })<br />
+										@Html.LabelFor(m => m.HouseDetails.Equipments)<br />
+										@Html.TextBoxFor(m => m.HouseDetails.Equipments, new { @class = "form-control" })<br />
+									</div>
+								</div>
+
+								<div class="form-group">
+									@Html.LabelFor(model => model.MedicationDetails, new { @class = "control-label col-md-3" })
+									<div class="col-md-9">
+										@Html.LabelFor(m => m.MedicationDetails.MedicationName)<br />
+										@Html.TextBoxFor(m => m.MedicationDetails.MedicationName, new { @class = "form-control" })<br />
+										@Html.LabelFor(m => m.MedicationDetails.Dosage)<br />
+										@Html.TextBoxFor(m => m.MedicationDetails.Dosage, new { @class = "form-control" })<br />
+										@Html.LabelFor(m => m.MedicationDetails.Frequency)<br />
+										@Html.TextBoxFor(m => m.MedicationDetails.Frequency, new { @class = "form-control" })<br />
+										@Html.LabelFor(m => m.MedicationDetails.MedicationReason)<br />
+										@Html.TextBoxFor(m => m.MedicationDetails.MedicationReason, new { @class = "form-control" })<br />
+									</div>
+								</div>
+							</div>
+
+							<hr />
+
+							<div class="row">
+								<div class="col-md-9 col-md-offset-3">
+									<input type="submit" value="Save" class="btn btn-primary" />
+									@Html.ActionLink("Cancel", "MyAccount", "Patient", null, new { @class = "btn btn-default" })
+								</div>
+							</div>
+						</div>
+					
+
+				</div>
+	}
+		</div>
+	</div>
+</div>
+@section Scripts {
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLAHAeG9pD0ARapCn2AbSAcbYXaX0dUhQ&libraries=places"></script>
+}

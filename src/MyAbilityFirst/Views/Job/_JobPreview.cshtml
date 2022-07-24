@@ -1,0 +1,101 @@
+﻿
+@{
+	ViewBag.Title = "Job Preview";
+}
+
+<div class="modal fade" id="newJobPreview" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+
+			<div class="modal-header" style="text-align: center;">
+				<button type="button" class="close" data-dismiss="modal"><b>&times;</b>	</button>
+				<span class="modal-title"><b></b></span><br />
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-lg-12">
+						<b><span style="font-size:16px" id="pre-title"></span></b><br /><br />
+						<span class="color-title">Patient Details</span>
+						<br />
+
+						<div class="job-lable">
+							<b>Name: </b><span id="pre-name"></span>
+						</div>
+
+						<hr />
+						<span class="color-title">Job Details</span>
+						<div class="job-lable">
+							<p> <span id="pre-description"></span></p>
+						</div>
+					</div>
+					<div class="job-lable job-padding">
+						<div class="col-md-6 col-sm-6 col-lg-6">
+							<span class="color-title">Location</span>
+							<hr />
+							<span class="glyphicon glyphicon-map-marker"></span>
+							<span id="pre-address"></span>
+
+						</div>
+						<div class="col-md-6 col-sm-6 col-lg-6">
+							<span class="color-title">Carer Gender Preference</span>
+							<hr />
+							<span class="glyphicon glyphicon-user"></span> <span id="pre-gender-preference"></span>
+						</div>
+					</div>
+					<div class="col-md-12 col-sm-12 col-lg-12">
+						<br />
+					</div>
+					<div class="job-lable job-padding">
+						<div class="col-md-6 col-sm-6 col-lg-6">
+							<span class="color-title">Start Date</span>
+							<hr />
+							<span class="glyphicon glyphicon-calendar"></span>
+							<span id="pre-start-date"></span>
+						</div>
+						<div class="col-md-3 col-sm-3 col-lg-3">
+							<span class="color-title">Start Time</span>
+							<hr />
+							<span class="glyphicon glyphicon-time"></span>
+							<span id="pre-start-time"></span>
+
+						</div>
+						<div class="col-md-3 col-sm-3 col-lg-3">
+							<span class="color-title">End Time</span>
+							<hr />
+							<span class="glyphicon glyphicon-time"></span>
+							<span id="pre-end-time"></span>
+						</div>
+					</div>
+					<div class="col-md-12 col-sm-12 col-lg-12">
+						<br />
+						<span id="pre-recurring"></span>
+						<br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Edit</button>
+				<input type="submit" value="Publish Job" class="btn btn-success btn-sm" id="previewsubmit"/>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	$('#newJobPreview').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget);
+		var previewtitle = button.data('previewtitle');
+		var modal = $(this);
+		modal.find('.modal-title').text(previewtitle);
+	})
+
+
+</script>
+
+

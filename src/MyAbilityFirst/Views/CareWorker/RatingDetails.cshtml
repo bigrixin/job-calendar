@@ -1,0 +1,87 @@
+﻿@model MyAbilityFirst.Models.RatingViewModel
+<link href="~/Content/bootstrap-rating.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-rating/bootstrap-rating.min.js"></script>
+@{
+	ViewBag.Title = "Rating Details";
+}
+<div class="navbar-left">
+	@Html.Action("_MyAccountSidebar", "MyAccount")
+</div>
+
+
+<div class="main-content-wrapper">
+	<div class="row">
+		<div class="col-md-12">
+			<h1>Rating details</h1>
+			<div class="card card-solid">
+				<dl class="dl-horizontal">
+					<dt>@Html.LabelFor(model => model.OverallScore)</dt>
+					<dd>
+						<span style="font-size:x-large; color:orange">
+							@Html.BootstrapRating(model => model.OverallScore).ReadOnly
+						</span>
+					</dd>
+
+					<dt>Comments</dt>
+					<dd>
+						@Html.DisplayFor(model => model.Comments)
+					</dd>
+					<hr />
+					<dt>
+						<span style="font-size:x-large; color:orange">
+							@Html.BootstrapRating(model => model.PunctualityScore).ReadOnly
+						</span>
+					</dt>
+					<dd>@Html.LabelFor(model => model.PunctualityScore)</dd>
+
+					<dt>
+						<span style="font-size:x-large; color:orange">
+							@Html.BootstrapRating(model => model.CommunicationScore).ReadOnly
+						</span>
+					</dt>
+					<dd>@Html.LabelFor(model => model.CommunicationScore)</dd>
+
+					<dt>
+						<span style="font-size:x-large; color:orange">
+							@Html.BootstrapRating(model => model.ServiceQualityScore).ReadOnly
+						</span>
+					</dt>
+					<dd>@Html.LabelFor(model => model.ServiceQualityScore)</dd>
+
+					<dt>
+						<span style="font-size:x-large; color:orange">
+							@Html.BootstrapRating(model => model.SatisfactionCheckingScore).ReadOnly
+						</span>
+					</dt>
+					<dd>@Html.LabelFor(model => model.SatisfactionCheckingScore)</dd>
+
+
+					<dt>
+						<span style="font-size:x-large; color:orange">
+							@Html.BootstrapRating(model => model.ResponsivenessScore).ReadOnly
+						</span>
+					</dt>
+					<dd>@Html.LabelFor(model => model.ResponsivenessScore)</dd>
+
+
+					<dt>
+						<span style="font-size:x-large; color:orange">
+							@Html.BootstrapRating(model => model.FollowUpScore).ReadOnly
+						</span>
+					</dt>
+					<dd>@Html.LabelFor(model => model.FollowUpScore)</dd>
+
+					<dt>
+						<span style="font-size:x-large; color:orange; cursor:pointer">
+							@Html.BootstrapRating(model => model.FutureRecommendationScore).ReadOnly
+						</span>
+					</dt>
+					<dd>@Html.LabelFor(model => model.FutureRecommendationScore)</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+

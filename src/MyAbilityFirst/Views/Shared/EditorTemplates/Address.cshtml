@@ -1,0 +1,15 @@
+﻿@model MyAbilityFirst.Domain.Address
+
+<div class="geocomplete-container">
+	@Html.TextBoxFor(
+					model => model.FullAddress,
+					new { @class = "form-control geocomplete-address", @placeholder = "street no. street, suburb, state, postcode, country" ,@id="full-address", @required = true })
+	@Html.ValidationMessageFor(model => model.FullAddress, "", new { @class = "text-danger" })
+	<div class="geocomplete-details">
+		@Html.HiddenFor(model => model.Suburb, new { @name = "profileSuburb", @data_geo = "locality", @value = "" })
+		@Html.HiddenFor(model => model.State, new { @name = "profileState", @data_geo = "administrative_area_level_1", @value = "" })
+		@Html.HiddenFor(model => model.Postcode, new { @name = "profilePostcode", @data_geo = "postal_code", @value = "" })
+		@Html.HiddenFor(model => model.Latitude, new { @name = "profileLatitude", @data_geo = "lat", @value = "" })
+		@Html.HiddenFor(model => model.Longitude, new { @name = "profileLongitude", @data_geo = "lng", @value = "" })
+	</div>
+</div>

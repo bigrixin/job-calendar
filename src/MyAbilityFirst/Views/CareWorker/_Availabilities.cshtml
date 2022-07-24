@@ -1,0 +1,25 @@
+﻿@model MyAbilityFirst.Models.CareWorkerDetailsViewModel
+@using MyAbilityFirst.Domain
+
+
+@for (int dowindex = 0; dowindex < Model.DayOfWeekList.Count(); dowindex++)
+{
+	<div class="form-group">
+		@Html.Label(Enum.GetName(typeof(DayOfWeek), Model.DayOfWeekList[dowindex]), htmlAttributes: new { @class = "control-label col-md-3" })
+
+		<div class="col-md-9">
+			@for (int todindex = 0; todindex < Model.TimeOfDayList.Count(); todindex++)
+			{
+				@Html.HiddenFor(model => Model.Availabilities[(Model.TimeOfDayList.Count() * dowindex) + todindex].ID)
+				@Html.HiddenFor(model => Model.Availabilities[(Model.TimeOfDayList.Count() * dowindex) + todindex].CareWorkerID)
+				@Html.HiddenFor(model => Model.Availabilities[(Model.TimeOfDayList.Count() * dowindex) + todindex].DayOfWeek)
+				@Html.HiddenFor(model => Model.Availabilities[(Model.TimeOfDayList.Count() * dowindex) + todindex].TimeOfDay)
+
+				<label>
+					@Html.CheckBoxFor(c => Model.Availabilities[(Model.TimeOfDayList.Count() * dowindex) + todindex].Selected)
+					@Html.LabelFor(c => Model.Availabilities[(Model.TimeOfDayList.Count() * dowindex) + todindex].Selected,  (Enum.GetName(typeof(TimeOfDay), Model.TimeOfDayList[todindex])))
+				</label>
+			}
+		</div>
+	</div>
+}

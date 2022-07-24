@@ -1,0 +1,161 @@
+﻿@using MvcCheckBoxList.Model
+@model MyAbilityFirst.Models.ClientDetailsViewModel
+
+@{
+	ViewBag.Title = "EditProfile";
+}
+<div class="navbar-left">
+	@Html.Action("_MyAccountSidebar", "MyAccount")
+</div>
+<script src="~/Scripts/Shared/datepicker-birthday.js"></script>
+<div class="main-content-wrapper">
+	<div class="row">
+		<div class="col-md-12">
+			@using (Html.BeginForm("EditProfile", "Client", FormMethod.Post, new { novalidate = "novalidate", @class = "form-horizontal" }))
+			{
+			@Html.AntiForgeryToken()
+				@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+				@Html.HiddenFor(model => model.ClientID)
+				<h1>
+					Profile
+				</h1>
+
+				<div class="card card-solid">
+					<h3>Personal details</h3>
+					<hr />
+					<div class="form-group">
+						@Html.LabelFor(model => model.FirstName, new { @class = "col-md-3 control-label" })
+						<div class="col-sm-9">
+							@Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+						</div>
+					</div>
+					<div class="form-group">
+						@Html.LabelFor(model => model.LastName, new { @class = "col-md-3 control-label" })
+						<div class="col-sm-9">
+							@Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+						</div>
+					</div>
+					<div class="form-group">
+						@Html.LabelFor(model => model.DoB, new { @class = "col-md-3 control-label" })
+						<div class="col-sm-9">
+							<div class='input-group date' id="datepicker-birthday">
+								@Html.EditorFor(model => model.DoB, new { htmlAttributes = new { @class = "form-control", @required = "required", @id="birthday", placeholder = "Please enter your birthday (DD/MM/YYYY)" } })
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+							@Html.ValidationMessageFor(model => model.DoB, "", new { @class = "text-danger" })
+						</div>
+					</div>
+					<div class="form-group">
+						@Html.LabelFor(model => model.Gender, new { @class = "col-md-3 control-label" })
+						<div class="col-sm-9">
+							@Html.DropDownListFor(model => model.GenderID, Model.GenderDropDownList, new { @class = "form-control" })
+							@Html.ValidationMessageFor(model => model.GenderID, "", new { @class = "text-danger" })
+						</div>
+					</div>
+					<div class="form-group">
+						@Html.LabelFor(model => model.Email, new { @class = "col-md-3 control-label" })
+						<div class="col-sm-9">
+							@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+						</div>
+					</div>
+					<div class="form-group">
+						@Html.LabelFor(model => model.Phone, new { @class = "col-md-3 control-label" })
+						<div class="col-sm-9">
+							@Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-3" })
+						<div class="col-md-9">
+							@Html.EditorFor(model => model.Address)
+						</div>
+					</div>
+
+
+					<h3>Notification &amp; Disclaimers</h3>
+					<hr />
+					<div class="form-group">
+						@Html.LabelFor(model => model.NotificationSettings, new { @class = "col-md-3 control-label" })
+						<div class="col-sm-9">
+							<div class="checkbox">
+								<label>
+									@Html.CheckBoxFor(m => m.NotificationSettings.ReceiveEmailNotifications)
+									@Html.DisplayNameFor(model => model.NotificationSettings.ReceiveEmailNotifications)
+									@Html.ValidationMessageFor(m => m.NotificationSettings.ReceiveEmailNotifications)
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+									@Html.CheckBoxFor(m => m.NotificationSettings.ReceiveSMSNotifications)
+									@Html.DisplayNameFor(model => model.NotificationSettings.ReceiveSMSNotifications)
+									@Html.ValidationMessageFor(m => m.NotificationSettings.ReceiveSMSNotifications)
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						@Html.LabelFor(model => model.Disclaimers, new { @class = "col-md-3 control-label" })
+						<div class="col-sm-9">
+							<div class="checkbox">
+								<label>
+									@Html.CheckBoxFor(m => m.Disclaimers.PremiseSafetyStatementAcknowledged)
+									@Html.DisplayNameFor(model => model.Disclaimers.PremiseSafetyStatementAcknowledged)
+									@Html.ValidationMessageFor(m => m.Disclaimers.PremiseSafetyStatementAcknowledged)
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+									@Html.CheckBoxFor(m => m.Disclaimers.FamilyFriendsPrivacyStatementAcknowledged)
+									@Html.DisplayNameFor(model => model.Disclaimers.FamilyFriendsPrivacyStatementAcknowledged)
+									@Html.ValidationMessageFor(m => m.Disclaimers.FamilyFriendsPrivacyStatementAcknowledged)
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+									@Html.CheckBoxFor(m => m.Disclaimers.OrganizationPrivacyStatementAcknowledged)
+									@Html.DisplayNameFor(model => model.Disclaimers.OrganizationPrivacyStatementAcknowledged)
+									@Html.ValidationMessageFor(m => m.Disclaimers.OrganizationPrivacyStatementAcknowledged)
+								</label>
+							</div>
+						</div>
+					</div>
+
+					<h3>How did you hear about us?</h3>
+					<hr />
+					<div class="form-group">
+						@Html.Label("How did you hear about us?", new { @class = "col-md-3 control-label" })
+						<div class="col-sm-9" style="padding-top:7px">
+							@Html.CheckBoxListFor(
+							 model => model.PostedSubCategoryIDs,
+							 model => model.MarketingInfoList,
+							 item => item.ID,
+							 item => item.Name,
+							 model => model.PreviousMarketingInfo,
+							 Position.Vertical)
+						</div>
+					</div>
+
+					<hr />
+
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-9" style="padding-top:7px;">
+							<input type="submit" value="Save" class="btn btn-primary" />
+							@Html.ActionLink("Cancel", "MyAccount", "Client", null, new { @class = "btn btn-default" })
+						</div>
+					</div>
+				</div>
+
+			}
+		</div>
+	</div>
+</div>
+@section Scripts {
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLAHAeG9pD0ARapCn2AbSAcbYXaX0dUhQ&libraries=places"></script>
+}

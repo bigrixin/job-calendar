@@ -1,0 +1,135 @@
+﻿@using MvcCheckBoxList.Model;
+@model MyAbilityFirst.Models.JobViewModel
+
+@{
+	ViewBag.Title = "Edit";
+}
+
+<div class="navbar-left">
+	@Html.Action("_MyAccountSidebar", "MyAccount")
+</div>
+ 
+<div class="main-content-wrapper">
+	<div class="row">
+		<div class="col-md-12">
+
+			<h1>Edit job</h1>
+
+			@using (Html.BeginForm("Edit", "Job", FormMethod.Post, new { enctype = "multipart/form-data" }))
+			{
+			@Html.AntiForgeryToken()
+
+				<div class="card card-solid form-horizontal">
+					@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+					@Html.HiddenFor(model => model.Id)
+					@Html.HiddenFor(model => model.ClientId)
+					@Html.HiddenFor(model => model.CreatedAt)
+ 
+					<div class="form-group">
+						@Html.LabelFor(model => model.PatientId, htmlAttributes: new { @class = "control-label col-md-3" })
+						<div class="col-md-9">
+							@Html.DropDownListFor(model => model.PatientId, Model.PatientDropDownList, new { @class = "form-control" })
+							@Html.ValidationMessageFor(model => model.PatientId, "", new { @class = "text-danger" })
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3" })
+						<div class="col-md-9">
+							@Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+							@Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-3" })
+						<div class="col-md-9">
+							@Html.TextAreaFor(model => model.Description, htmlAttributes: new { @class = "form-control", @Rows = 8 })
+							@Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-3" })
+						<div class="col-md-9">
+							@Html.EditorFor(model => model.Address)
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.GenderId, htmlAttributes: new { @class = "control-label col-md-3" })
+						<div class="col-md-9">
+							@Html.DropDownListFor(model => model.GenderId, Model.GenderDropDownList, new { @class = "form-control" })
+							@Html.ValidationMessageFor(model => model.GenderId, "", new { @class = "text-danger" })
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.ServiceId, htmlAttributes: new { @class = "control-label col-md-3" })
+						<div class="col-md-9">
+							@Html.DropDownListFor(model => model.ServiceId, Model.ServiceDropDownList, new { @class = "form-control" })
+							@Html.ValidationMessageFor(model => model.ServiceId, "", new { @class = "text-danger" })
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.ServicedAt, new { @class = "control-label col-md-3" })
+						<div class="col-md-9">
+							<div class='input-group date datetimepicker'>
+								@Html.EditorFor(model => model.ServicedAt, new { htmlAttributes = new { @class = "form-control", data_date_format = "DD MMM YYYY hh:mm A" } })
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+							@Html.ValidationMessageFor(model => model.ServicedAt, "", new { @class = "text-danger" })
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.PictureURL, htmlAttributes: new { @class = "control-label col-md-3" })
+
+						<div class="col-md-5">
+							<input type="file" name="files" id="uploadFile" accept="image/*" capture class="btn btn-default btn-sm" value=@ViewBag.pictureURL />
+						</div>
+						<div class="col-md-1">
+							@if (!String.IsNullOrEmpty(Model.PictureURL))
+							{
+							<img src="@Url.Content(Model.PictureURL)" id="pictureFileId" height="30" width="30" border="0">
+								<br />
+							}
+						</div>
+						<div class="col-md-3">
+							<input type="button" name="cancelUploadFile" id="cancelUploadFile" class="btn btn-default btn-sm" value="Cancel" />
+						</div>
+						<div class="col-md-6" hidden="hidden">
+							@Html.EditorFor(model => model.PictureURL, new { htmlAttributes = new { @class = "form-control", @id = "fileRecord", @readonly = "readonly", @value = @ViewBag.pictureURL } })
+							@Html.ValidationMessageFor(model => model.PictureURL, "", new { @class = "text-danger" })
+
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-3 col-md-9">
+							<span style="color:red">* Allowed upload file JPG / GIF / BMP / PNG only, Max. 5 MB</span>
+						</div>
+					</div>
+
+					<hr>
+
+					<div class="form-group">
+						<div class="col-md-offset-3 col-md-9">
+							<input type="submit" value="Save" class="btn btn-primary" />
+							&nbsp; @Html.ActionLink("Back to List", "Index")
+						</div>
+					</div>
+				</div>
+			}
+
+			<div>
+
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts {
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLAHAeG9pD0ARapCn2AbSAcbYXaX0dUhQ&libraries=places"></script>
+}

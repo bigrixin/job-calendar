@@ -1,0 +1,49 @@
+﻿@model MyAbilityFirst.Models.JobViewModel
+@{
+	ViewBag.Title = "Delete";
+}
+<div class="col-md-3">
+	@Html.Action("_MyAccountSidebar", "MyAccount")
+</div>
+<div class="col-md-7">
+	<h4 class="page-header">Are you sure you want to delete this job posting?</h4>
+
+	<div>
+		<dl class="dl-horizontal">
+			<dt>@Html.DisplayNameFor(model => model.Title)</dt>
+			<dd>@Html.DisplayFor(model => model.Title)</dd>
+
+			<dt>@Html.DisplayNameFor(model => model.Description)</dt>
+			<dd>@Html.DisplayFor(model => model.Description)</dd>
+
+			<dt>@Html.DisplayNameFor(model => model.Address)</dt>
+			<dd>@Html.DisplayFor(model => model.Address.FullAddress)</dd>
+
+			<dt>@Html.DisplayNameFor(model => model.GenderId)</dt>
+			<dd>@Model.GenderDropDownList.FirstOrDefault(g => g.Value == Model.GenderId.ToString()).Text</dd>
+
+			<dt>@Html.DisplayNameFor(model => model.ServiceId)</dt>
+			<dd>@Model.ServiceDropDownList.FirstOrDefault(s => s.Value == Model.ServiceId.ToString()).Text</dd>
+
+			<dt>@Html.DisplayNameFor(model => model.ServicedAt)</dt>
+			<dd>@Html.DisplayFor(model => model.ServicedAt)</dd>
+			<dt>@Html.DisplayNameFor(model => model.PictureURL)</dt>
+			<dd>
+				@if (!String.IsNullOrEmpty(Model.PictureURL))
+				{
+				<img src="@Url.Content(Model.PictureURL)" height="100" width="100">
+				}
+
+			</dd>
+		</dl>
+
+		@using (Html.BeginForm())
+		{
+		@Html.AntiForgeryToken()
+
+			<div class="form-actions no-color">
+				<input type="submit" value="Delete" class="btn btn-default" />&nbsp;
+				@Html.ActionLink("Back to List", "Index")
+			</div>}
+	</div>
+</div>

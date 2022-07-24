@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "calender";
+}
+
+<h2>calender</h2>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btn").click(function () {
+            // httproute = "" - using this to construct proper web api links.
+            window.location.href = "@Url.Action("GetFile", "Data", new { httproute = "https://localhost:44301/Coordinator/mycalender" })";
+        });
+    });
+</script>
+
+
+<button id="btn">
+	Button text
+</button>
+
+<a href="@Url.Action("GetFile", "Data", new { httproute = "https://localhost:44301/Coordinator/mycalender" })">Data</a>

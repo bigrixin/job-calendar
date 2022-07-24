@@ -1,0 +1,12 @@
+﻿@model MyAbilityFirst.Models.ShortlistViewModel
+
+<button id="shortlist-toggle-btn-@Model.SelectedUserID" class="@(Model.Selected ? "btn btn-success btn-xs" : "btn btn-default btn-xs")" data-loading-text="<i class='glyphicon glyphicon-hourglass'></i>" type="button"
+				onclick="AJAXPostShortlistButton(
+					'@(Url.Action("UpdateShortlist", "Shortlist", Model))', 
+					{SelectedUserID: @Model.SelectedUserID , Selected: @Json.Encode(Model.Selected)}, 
+					'#shortlist-toggle-btn-@Model.SelectedUserID', 
+					'btn-success btn-default',
+					[])"
+>
+	<i class="glyphicon glyphicon-star" id="shortlist-toggle-icon"></i>
+</button>

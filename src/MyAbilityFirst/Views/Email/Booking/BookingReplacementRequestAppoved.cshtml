@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<body>
+	<p>
+		Hi @Model.CarerFirstName,
+	</p>
+
+	<p>
+		Your replace request has approved by coordinator. The details is below:
+	</p>
+
+	<p>
+		<b>Message:</b><br />
+		@Model.Message
+	</p>
+
+	<p>
+		<a href="@Model.CallbackURL/careworker/booking/?bookingId=@Model.BookingID">View the request here</a> to respond.
+	</p>
+
+	<p>
+		Regards,<br />
+		My Ability First
+	</p>
+</body>

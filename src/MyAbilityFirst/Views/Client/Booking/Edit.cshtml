@@ -1,0 +1,48 @@
+﻿@model MyAbilityFirst.Domain.ClientFunctions.UpdateBookingViewModel
+
+@{
+	ViewBag.Title = "Edit";
+
+	bool editable = !(Model.IsLapsed || Model.IsCancelled);
+}
+
+<div class="navbar-left">
+	@Html.Action("_MyAccountSidebar", "MyAccount")
+</div>
+
+<div class="main-content-wrapper">
+	<div class="row">
+		<div class="col-md-12">
+			<h1>Edit booking</h1>
+
+			<div class="card card-solid">
+				@if (!editable)
+				{
+				<div class="alert alert-info">
+					This booking has lapsed or has been cancelled.
+				</div>
+				}
+
+				@using (Html.BeginForm("EditBooking", "Client", FormMethod.Post, new { @class = "form-horizontal " + (editable ? "" : "non-editable") }))
+				{
+					@Html.AntiForgeryToken()
+
+					@Html.HiddenFor(m => m.BookingID)
+					@Html.Partial("~/Views/Client/Booking/_EditFields.cshtml");
+
+					if (editable)
+					{
+					<div class="form-horizontal">
+						<div class="form-group">
+							<div class="col-md-offset-3 col-md-9">
+								<input type="submit" value="Update" class="btn btn-default" />
+								&nbsp; @Html.ActionLink("Cancel this booking", "CancelBooking")
+							</div>
+						</div>
+					</div>
+					}
+				}
+			</div>
+		</div>
+	</div>
+</div>

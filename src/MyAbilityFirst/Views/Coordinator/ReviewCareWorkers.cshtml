@@ -1,0 +1,68 @@
+﻿@model IEnumerable<MyAbilityFirst.Models.CareWorkerReviewViewModel>
+@{
+	ViewBag.Title = "Review CareWorkers";
+}
+<style>
+	.container-fluid {
+		padding: 0px;
+	}
+</style>
+<div class="container-fluid">
+	<div class="navbar-left">
+		@Html.Partial("_LeftSideMenu")
+	</div>
+	<div class="main-content-wrapper">
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Review Client Rating</h2>
+				<div class="card card-solid">
+					<table class="table">
+						<tr>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Suburb</th>
+							<th>Email</th>
+							<th>Phone</th>
+							<th>Create Date</th>
+							<th>Action</th>
+						</tr>
+						@foreach (var item in Model)
+						{
+							<tr>
+								<td>
+									@{if (item.CareWorkerID != 0)
+										{
+										@Html.ActionLink(item.FirstName, "publicprofile", "profile", new { id = item.CareWorkerID }, null)
+										}
+									}
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => item.LastName)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => item.Suburb)
+								</td>
+
+								<td>
+									@Html.DisplayFor(modelItem => item.Email)
+								</td>
+
+								<td>
+									@Html.DisplayFor(modelItem => item.Phone)
+								</td>
+								<td>
+									@Convert.ToDateTime(item.CreatedDate).ToString("dd MMM yyyy")
+								</td>
+								<td>
+									@Html.ActionLink("Approve", "ApproveCareWorker", "Coordinator", new { CareWorkerID = item.CareWorkerID }, new { @class = "btn btn-primary btn-sm" })
+									@Html.ActionLink("Details", "CareworkerProfile", "Profile", new { CareWorkerID = item.CareWorkerID }, new { @class = "btn btn-success btn-sm" })
+								</td>
+							</tr>
+										}
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

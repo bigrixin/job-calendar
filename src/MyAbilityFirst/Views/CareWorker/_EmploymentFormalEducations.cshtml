@@ -1,0 +1,47 @@
+﻿@model MyAbilityFirst.Models.CareWorkerDetailsViewModel
+
+@for (int index = 0; index < Model.EmploymentFormalEducations.Count(); index++)
+{
+	<div>
+			@Html.HiddenFor(model => model.EmploymentFormalEducations[index].ID)
+			@Html.HiddenFor(model => model.EmploymentFormalEducations[index].CareWorkerID)
+
+			<div class="form-group">
+				@Html.Label("Education Level", htmlAttributes: new { @class = "control-label col-md-3" })
+				<div class="col-md-9">
+					@Html.DropDownListFor(
+						m => m.EmploymentFormalEducations[index].FormalEducationID,
+						new SelectList(Model.FormalEducationDropDownList.Items,
+						"ID",
+						"Name",
+						Model.EmploymentFormalEducations[index].FormalEducationID),
+						new { @class = "form-control" })
+					@Html.ValidationMessageFor(model => model.EmploymentFormalEducations[index].FormalEducationID, "", new { @class = "text-danger" })
+					@Html.HiddenFor(model => model.EmploymentFormalEducations[index].FormalEducationID)
+				</div>
+			</div>
+
+			<div class="form-group">
+				@Html.LabelFor(model => model.EmploymentFormalEducations[index].Description, htmlAttributes: new { @class = "control-label col-md-3" })
+				<div class="col-md-9">
+					@Html.TextAreaFor(model => model.EmploymentFormalEducations[index].Description, htmlAttributes: new { @class = "form-control", @Rows = 4 })
+					@Html.ValidationMessageFor(model => model.EmploymentFormalEducations[index].Description, "", new { @class = "text-danger" })
+					@Html.HiddenFor(model => model.EmploymentFormalEducations[index].Description)
+				</div>
+			</div>
+	</div>
+}
+<div id="div-new-employment-formal-education">
+	<div class="col-md-12">
+		<button id="btn-add-employment-formal-education" type="button" class="btn btn-default"
+						onclick="AJAXPostReplace(
+					'@(Url.Action("NewEmploymentFormalEducation", "CareWorker", null))',
+					{EmploymentFormalEducations: @Json.Encode(Model.EmploymentFormalEducations)},
+					'#btn-add-employment-formal-education',
+					'#div-new-employment-formal-education',
+					[]
+			)">
+			<i class="glyphicon glyphicon-plus"></i> Add Formal Education
+		</button>
+	</div>
+</div>

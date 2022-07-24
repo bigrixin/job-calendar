@@ -1,0 +1,67 @@
+﻿@model IEnumerable<MyAbilityFirst.Models.ReplacementViewModel>
+
+@{
+	ViewBag.Title = "Review Rating";
+}
+<style>
+	.container-fluid {
+		padding: 0px;
+	}
+</style>
+<div class="container-fluid">
+	<div class="navbar-left">
+		@Html.Partial("_LeftSideMenu")
+	</div>
+	<div class="main-content-wrapper">
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Replacement request</h2>
+				<div class="card card-solid">
+					<table class="table">
+						<tr>
+							<th>Booking ID</th>
+							<th>Client First Name</th>
+							<th>Carer First Name</th>
+							<th>Comment</th>
+							<th>Create At</th>
+							<th>Action</th>
+						</tr>
+						@foreach (var item in Model)
+						{
+				  		@Html.HiddenFor(modelItem => item.BookingID)
+							@Html.HiddenFor(modelItem => item.ClientID)
+							@Html.HiddenFor(modelItem => item.CareWorkerID)
+							@Html.HiddenFor(modelItem => item.CoordinatorID)
+							<tr>
+								<td>
+									#	@Html.DisplayFor(modelItem => item.BookingID)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => item.ClientFirstName)
+								</td>
+								<td>
+									@{if (item.CareWorkerID != 0)
+										{
+										@Html.ActionLink(item.CareWorkerFirstName, "publicprofile", "profile", new { id = item.CareWorkerID }, null)
+										}
+									}
+								</td>
+								<td>
+									<span style=" color:orange">
+										@Html.DisplayFor(modelItem => item.CommentByCareWorker)
+									</span>
+								</td>
+								<td>
+									@Convert.ToDateTime(item.CreatedAt).ToString("dd MMM yyyy")
+								</td>
+								<td>
+									@Html.ActionLink("Replace", "Replacement", "Coordinator", new { replacementID = item.ID }, new { @class = "btn btn-primary btn-sm" })
+								</td>
+							</tr>			
+							}
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

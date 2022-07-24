@@ -1,0 +1,132 @@
+﻿@model MyAbilityFirst.Models.CoordinatorDetailsViewModel
+@{
+	ViewBag.Title = "Coordinator Profile";
+}
+
+<style>
+	.container-fluid {
+		padding: 0px;
+	}
+</style>
+<div class="container-fluid">
+	<div class="navbar-left">
+		@Html.Partial("_LeftSideMenu")
+	</div>
+	<div class="main-content-wrapper">
+		<div class="row">
+			<div class="col-md-12">
+				@using (Html.BeginForm())
+			{
+			@Html.AntiForgeryToken()
+					@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+					<h1>Profile</h1>
+					@Html.HiddenFor(model => model.ID)
+					<div class="card card-solid form-horizontal">
+						<h3>Personal details</h3>
+						<hr>
+						<div class="form-group">
+							@Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-3" })
+							<div class="col-md-9">
+								@Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+								@Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<div class="form-group">
+							@Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-3" })
+							<div class="col-md-9">
+								@Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+								@Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<div class="form-group">
+							@Html.LabelFor(model => model.DoB, htmlAttributes: new { @class = "control-label col-md-3" })
+							<div class="col-md-9">
+								<div class='input-group date datetimepicker'>
+									@Html.EditorFor(model => model.DoB, new { htmlAttributes = new { @class = "form-control", data_date_format = "DD MMM YYYY", placeholder = "Please enter your birthday" } })
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+								@Html.ValidationMessageFor(model => model.DoB, "", new { @class = "text-danger" })
+							</div>
+						</div>
+
+						<div class="form-group">
+							@Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-3" })
+							<div class="col-md-9">
+								@Html.DropDownListFor(model => model.GenderID, Model.GenderDropDownList, new { @class = "form-control" })
+								@Html.ValidationMessageFor(model => model.GenderID, "", new { @class = "text-danger" })
+							</div>
+						</div>
+
+						<div class="form-group">
+							@Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+							<div class="col-md-9">
+								@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+								@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<div class="form-group">
+							@Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-3" })
+							<div class="col-md-9">
+								@Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+								@Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+							</div>
+						</div>
+
+						<div class="form-group">
+							@Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-3" })
+							<div class="col-md-9">
+								<div class="geocomplete-container">
+									@Html.TextBoxFor(model => model.Address.FullAddress,
+					new { @class = "form-control geocomplete-address", @id = "resientialId", @placeholder = "street no. street, suburb, state, postcode, country" })
+									@Html.ValidationMessageFor(model => model.Address.FullAddress, "", new { @class = "text-danger", @id = "resientialValidation", @required = true })
+									<div class="geocomplete-details resiential">
+										@Html.TextBoxFor(model => model.Address.Suburb, new { @name = "profileSuburb", @data_geo = "locality", @value = "" })
+										@Html.TextBoxFor(model => model.Address.State, new { @name = "profileState", @data_geo = "administrative_area_level_1", @value = "" })
+										@Html.TextBoxFor(model => model.Address.Postcode, new { @name = "profilePostcode", @data_geo = "postal_code", @value = "" })
+										@Html.TextBoxFor(model => model.Address.Latitude, new { @name = "profileLatitude", @data_geo = "lat", @value = "" })
+										@Html.TextBoxFor(model => model.Address.Longitude, new { @name = "profileLongitude", @data_geo = "lng", @value = "" })
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							@Html.LabelFor(model => model.OrganisationID, htmlAttributes: new { @class = "control-label col-md-3" })
+							<div class="col-md-9">
+								@Html.DropDownListFor(model => model.OrganisationID, Model.OrganisationDropDownList, " ", new { @class = "form-control" })
+								@Html.ValidationMessageFor(model => model.OrganisationID, "", new { @class = "text-danger" })
+							</div>
+						</div>
+
+						<div class="form-group">
+							@Html.LabelFor(model => model.StartingDate, htmlAttributes: new { @class = "control-label col-md-3" })
+							<div class="col-md-9">
+								<div class='input-group date datetimepicker'>
+									@Html.EditorFor(model => model.StartingDate, new { htmlAttributes = new { @class = "form-control", data_date_format = "DD MMM YYYY", placeholder = "Commenced providing services with the orgnisation" } })
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div>
+								@Html.ValidationMessageFor(model => model.StartingDate, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<hr />
+
+						<div>
+							<input type="submit" value="Save" class="btn btn-primary" />
+							@Html.ActionLink("Cancel", "MyAccount", "Coordinator", null, new { @class = "btn btn-default" })
+						</div>
+					</div>
+			}
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLAHAeG9pD0ARapCn2AbSAcbYXaX0dUhQ&libraries=places"></script>
+}
+

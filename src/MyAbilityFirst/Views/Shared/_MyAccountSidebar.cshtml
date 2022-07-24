@@ -1,0 +1,106 @@
+﻿@model MyAbilityFirst.Models.MyAccountViewModel
+
+@if (!Model.EmailVerified)
+{
+	<br />
+	<div class="alert alert-warning bottom-buffer-10">
+		Your email has not been verified. @Html.ActionLink("Click here", "ResendConfirmEmail", "Account") to re-send your confirmation email.
+	</div>
+	<br />
+}
+
+<div>
+	<ul class="list-unstyled">
+		<li @(Model.NavSection.Contains("Client-") && !Model.NavSection.Contains("Booking") ? "class=active" : "")>
+			<h4><span class="fa fa-key"></span> My profile</h4>
+			<ul class="list-unstyled">
+				<li>@Html.ActionLink("Profile", "EditProfile", Model.UserType, routeValues: null, htmlAttributes: new { title = "My Profile" })</li>
+				<li>@Html.ActionLink("Change Password", "changepassword", "Manage", routeValues: null, htmlAttributes: new { title = "Change Password" })</li>
+			</ul>
+		</li>
+	</ul>
+	<hr />
+	@if (Model.UserType == "Client")
+	{
+	<ul class="list-unstyled">
+		<li @(Model.NavSection.Contains("Patient-") ? "class=active" : "")>
+			<h4><span aria-hidden="true" class="fa fa-users"></span> Patient Management</h4>
+			<ul class="list-unstyled">
+				<li>@Html.ActionLink("Add a patient", "NewProfile", "Patient", routeValues: null, htmlAttributes: new { title = "Add Patient" })</li>
+				<li>
+					Update a patient
+					@if (Model.PatientList.Any())
+					{
+					<ul>
+						@foreach (var item in Model.PatientList)
+					{
+					<li>@Html.ActionLink(item.FirstName + " " + item.LastName, "EditProfile", "Patient", new { patientID = item.ID }, htmlAttributes: new { title = "MyAccount" })</li>
+					}
+					</ul>
+					}
+				</li>
+			</ul>
+		</li>
+	</ul>
+	<hr />
+	<ul class="list-unstyled">
+		<li @(Model.NavSection.Contains("Job-") ? "class=active" : "")>
+			<h4><span aria-hidden="true" class="fa fa-heart-o"></span> Job postings</h4>
+			<ul class="list-unstyled">
+				<li>@Html.ActionLink("Post a new job", "create", "Job", routeValues: null, htmlAttributes: new { title = "Post a Job" })</li>
+				<li>@Html.ActionLink("All jobs / Update a job", "index", "Job", routeValues: null, htmlAttributes: new { title = "Update a Job" })</li>
+			</ul>
+		</li>
+	</ul>
+	<hr />
+		<ul class="list-unstyled">
+			<li @(Model.NavSection.Contains("Booking") ? "class=active" : "")>
+				<h4><span aria-hidden="true" class="fa fa-tasks"></span> Booking Management</h4>
+				<ul class="list-unstyled">
+					<li>@Html.ActionLink("Create a new booking", "NewBooking", "Client", routeValues: null, htmlAttributes: new { title = "Post a Job" })</li>
+					@{
+						var bookings = "";   /// Model.Bookings.Where(a => (int)a.Status != 5 && (int)a.Status != 6);
+					}
+					@if (bookings.Any())
+				{
+				<li>
+					<ul>
+						@foreach (var item in bookings)
+						{
+						<li>
+						@*	@Html.ActionLink(string.Format("Booking #{0}", item.ID.ToString()), "Booking", "Client", new { bookingId = item.ID }, null)
+
+	@Html.Partial("_BookingStatus", item.Status)*@
+						</li>
+
+						}
+					</ul>
+				</li>
+				}
+				</ul>
+				<ul class="list-unstyled">
+					<li>@Html.ActionLink("Booking history", "BookingHistory", "Client", routeValues: null, htmlAttributes: new { title = "Post a Job" })</li>
+				</ul>
+			</li>
+		</ul>
+			}
+
+	@if (Model.UserType == "CareWorker")
+			{
+			<h4><span class="fa fa-tasks"></span> Booking Management</h4>
+			<ul class="list-unstyled">
+				<li>@Html.ActionLink(" My Bookings", "Bookings", "CareWorker", routeValues: null, htmlAttributes: new { title = "My Bookings" })</li>
+			</ul>
+			}
+	<hr />
+	<ul class="list-unstyled">
+
+		<li>
+			<h4>
+				<span aria-hidden="true" class="fa fa-search">
+					@Html.ActionLink("Search for CareWorkers", "SearchCareWorker", "Search", routeValues: null, htmlAttributes: new { title = "Search" })
+				</span>
+		</h4>
+		</li>
+	</ul>
+</div>

@@ -1,0 +1,109 @@
+﻿@model PagedList.IPagedList<MyAbilityFirst.Domain.ClientFunctions.UpdateBookingViewModel>
+@using PagedList.Mvc;
+<link href="~/Content/bootstrap-rating.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-rating/bootstrap-rating.min.js"></script>
+@{
+	ViewBag.Title = "Booking History";
+}
+<div class="navbar-left">
+	@Html.Action("_MyAccountSidebar", "MyAccount")
+</div>
+
+<div class="main-content-wrapper">
+	<div class="row">
+		<div class="col-md-12">
+			<h2>Booking History</h2>
+			<div class="card card-solid">
+				<table class="table">
+					<tr>
+						<th>Carer Name</th>
+						<th>Start</th>
+						<th>End</th>
+						<th>Message</th>
+						<th>Distance</th>
+						<th>Status</th>
+						<th>Details</th>
+						<th>Rating</th>
+					</tr>
+
+					@foreach (var item in Model)
+					{
+					<tr>
+						<td>
+							@Html.ActionLink(item.CareWorkerFirstName, "publicprofile", "Profile", new { id = item.CareWorkerID }, null)
+						</td>
+						<td>
+							@Convert.ToDateTime(item.Schedule.Duration.Start).ToString("dd/MMM")
+						</td>
+						<td>
+							@Convert.ToDateTime(item.Schedule.Duration.End).ToString("dd/MMM")
+						</td>
+						<td>
+							@{
+								if (item.Message != null)
+								{
+									if (item.Message.Length > 50)
+									{
+									@item.Message.Substring(0, 50).ToString() @:<span>...</span>
+								  }
+									else
+									{
+									@Html.DisplayFor(modelItem => item.Message)
+									}
+								}
+							}
+						</td>
+						<td>
+							<span class="glyphicon glyphicon-map-marker" style="color:green"></span>
+							@{if (decimal.Parse(item.Distance) < 1000)
+								{
+								@Html.Raw(String.Format("{0:0.0}", decimal.Parse(item.Distance)))
+								}
+								else
+								{
+								<span>?</span>
+								}
+							}
+							<span>km</span>
+						</td>
+						<td>
+							@Html.Partial("_BookingStatus", item.Status)
+						</td>
+						<td>
+							@Html.HiddenFor(modelItem => item.BookingID)
+							@Html.HiddenFor(modelItem => item.CareWorkerID)
+
+							@Html.ActionLink("Details", "Booking", new { bookingId = item.BookingID }, new { @class = "btn btn-primary btn-xs" })
+						</td>
+						<td>
+							@{
+								if (item.Status.ToString() == "Completed")
+								{
+									if (item.Rating.SingleOrDefault() != null)
+									{
+										Double rating = Convert.ToDouble(item.Rating.SingleOrDefault().OverallScore);
+										<span style="font-size:small; color:orange">
+											@Html.BootstrapRating().Value(rating).ReadOnly <br />
+										</span>
+										if (item.Rating.Single().Status == MyAbilityFirst.Domain.RatingStatus.New || item.Rating.Single().Status == MyAbilityFirst.Domain.RatingStatus.Update)
+										{
+										@Html.ActionLink("Update", "UpdateRating", "client", new { bookingId = item.BookingID }, new { @class = "btn btn-dafaut btn-xs" })
+										}
+									}
+									else
+									{
+									@Html.ActionLink("Rating", "Rating", new { bookingId = item.BookingID }, new { @class = "btn btn-dafaut btn-xs" })
+									}
+								}
+							}
+						</td>
+					</tr>
+								}
+				</table>
+				<br />
+				Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+				@Html.PagedListPager(Model, page => Url.Action("BookingHistory", new { page }))
+			</div>
+		</div>
+	</div>
+</div>

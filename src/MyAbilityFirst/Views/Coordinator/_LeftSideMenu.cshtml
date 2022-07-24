@@ -1,0 +1,15 @@
+﻿
+@{
+	ViewBag.Title = "Co-ordinator View";
+}
+<br />
+<div class="nav nav-sidebar">
+	@Html.ActionLink(" My Profile", "MyAccount", "Coordinator", routeValues: null, htmlAttributes: new { title = "Update Profile", @class = "btn btn-block btn-default btn-lg fa fa-user" })
+	@Html.ActionLink(" Review Care Worker ", "ReviewCareWorkers", "Coordinator", routeValues: null, htmlAttributes: new { title = "Review Care Worker", @class = "btn btn-block btn-default btn-lg fa fa-users" })
+	@Html.ActionLink(" Jobs Status Alert", "JobStatus", "Coordinator", routeValues: null, htmlAttributes: new { title = "Jobs Status Alert", @class = "btn btn-block btn-default btn-lg fa fa-calendar " })
+	@Html.ActionLink(" Review Overall Rating ", "ReviewRatings", "Coordinator", null, htmlAttributes: new { title = "Review Rating", @class = "btn btn-block btn-default btn-lg fa fa-star" })
+	@Html.ActionLink(" Replace Care Worker", "Replacements", "Coordinator", routeValues: null, htmlAttributes: new { title = "Rearrange a Care Worker", @class = "btn btn-block btn-default btn-lg fa fa-exchange" })
+	@Html.ActionLink(" Search for CareWorkers", "SearchCareWorker", "Search", routeValues: null, htmlAttributes: new { title = "Search", @class = "btn btn-block btn-default btn-lg fa fa-search" })
+</div>
+
+

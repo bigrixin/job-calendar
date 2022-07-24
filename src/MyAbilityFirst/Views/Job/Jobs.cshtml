@@ -1,0 +1,180 @@
+﻿@model PagedList.IPagedList<MyAbilityFirst.Models.JobsViewModel>
+@using PagedList.Mvc;
+@{
+	ViewBag.Title = "Jobs";
+}
+<style>
+	h2 {
+		font-size: 22px;
+	}
+
+	hr {
+		margin-top: 5px;
+		margin-bottom: 5px;
+	}
+
+	.job-lable {
+		font-size: 12px;
+	}
+
+	.job-padding {
+		padding-bottom: 5px;
+		padding-top: 5px;
+	}
+
+	.button_day .button_patientname {
+		padding: 3px;
+		font-size: 12px;
+	}
+
+	.color-title {
+		font-size: 12px;
+		color: green;
+		font-weight: bold;
+	}
+
+	.color-ico {
+		color:  #5cb85c;
+	}
+
+	#datepicker {
+		width: 180px;
+		margin: 0 20px 20px 20px;
+	}
+
+		#datepicker > span:hover {
+			cursor: pointer;
+		}
+</style>
+<script>
+	$(function () {
+		$('.delete-container').change(function () {
+			var jobsid = [];
+			$('.delete-container input[type=checkbox]').each(function () {
+				if (this.checked) {
+					var id = this.id.substr('selected'.length);
+					jobsid.push(id);
+				}
+			});
+			$('#SelectedJobsID').val(jobsid);
+
+			var ids = $('#SelectedJobsID').val();
+			if (jobsid.length > 0)
+				$('#deleteBtn').show();
+			else
+				$('#deleteBtn').hide();
+		});
+
+		$('#deleteBtn').click(function () {
+			var result = confirm("Confirm to delete the selected jobs?");
+			if (result)
+				window.setTimeout(deleteJobs(), 200);
+			return result;
+		});
+
+		function deleteJobs() {
+			var url = $('#delete-url').val();
+			$.ajax({
+				type: 'GET',
+				url: url,
+				dataType: 'json',
+				data: {
+					clientID: $('#ClientID').val(),
+					selectedJobsID: $('#SelectedJobsID').val()
+				},
+				success: function (elements) {
+					location.replace(location.pathname);
+					window.location.reload();
+					alert("The jobs has deleted !");
+				},
+				error: function (request, status, error) {
+					alert('Failed to retrieve data' + request.responseText);
+				}
+			});
+		}
+	});
+</script>
+
+<div class="container-fluid col-mod-12 col-lg-12 col-xs-12 col-sm-12">
+	<div class="col-md-offset-2 col-md-8 col-lg-offset-1 col-lg-9  col-sm-offset-2 col-sm-8">
+		<h2 style="color:palevioletred"><b>Sample Carers Job Board</b></h2>
+		<span class="job-lable">This section alows you to create new job advertisements to connect you with the carer community.</span>
+		<br />
+		<span class="job-lable">You can also <b>Search for a carer</b> yourself baased on your location.</span>
+		<br />
+		@using (Html.BeginForm("Jobs", "Job", FormMethod.Get, new { enctype = "multipart/form-data" }))
+		{
+		@Html.HiddenFor(model => model.FirstOrDefault().ClientID)
+			@Html.HiddenFor(model => model.FirstOrDefault().SelectedJobsID)
+			@Html.Hidden("delete-url", Url.Action("DeleteJobs", "Job"))
+			<div>
+				<table class="table" style="margin-bottom:0px;">
+					<thead>
+						<tr>
+							<td class="text-left">
+								@Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @placeholder = "Search for a job" })
+								<input type="submit" value="Go!" class="btn btn-success btn-xs" />
+							</td>
+ 
+						</tr>
+					</thead>
+				</table>
+			</div>
+ 
+			<div class="card card-solid job-lable row">
+				<div class="delete-container">
+					<table class="table  table-striped">
+						@{ var j = 0; }
+						@foreach (var item in Model)
+					{
+					<tr>
+						<td>
+ 
+						</td>
+						<td>
+							<h5><b><span>@Html.DisplayFor(modelItem => item.Title)</span></b></h5>
+							<span class="glyphicon glyphicon-user color-ico"> </span> <span> @Html.DisplayFor(modelItem => item.Patients)</span> <br />
+							<span class="glyphicon glyphicon-calendar color-ico"> </span> <span>@Html.DisplayFor(modelItem => item.Schedule)</span>
+						</td>
+						<td class="text-right">
+							<span class="badge progress-bar-success btn-sm" style="font-size:8px;">
+								@if (DateTime.Compare(item.CreatedAt.Value.AddHours(4), DateTime.Now) > 0)
+								{
+								<span>New</span>
+				 
+								}
+								else if (DateTime.Compare(item.EndDate, DateTime.Now) > 0)
+								{
+								<span>Current</span>
+								}
+								else
+								{
+								<span style="color:brown">Expired</span>
+								}
+							</span>
+						</td>
+						<td class="text-right">
+							@if (DateTime.Compare(item.EndDate, DateTime.Now) >= 0)
+							{
+							@Html.ActionLink("Details", "Details", "Job", new { @id = item.ID }, new { @class = "btn btn-default btn-xs" })
+							}
+							<br />
+							<b><span class="job-lable">Created:&nbsp;</span></b>@String.Format("{0:dd/MM/yyyy}", item.CreatedAt)<br />
+							<b><span class="job-lable">Responses:&nbsp;</span></b>0<br />
+							<b><span class="job-lable">Post Views:&nbsp;</span></b>@item.Views
+						</td>
+					</tr>
+						j++;
+					}
+					</table>
+				</div>
+
+				<br />
+				Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+				@Html.PagedListPager(Model, page => Url.Action("Jobs", new { page }))
+			</div>
+ 
+							}
+	</div>
+
+</div>

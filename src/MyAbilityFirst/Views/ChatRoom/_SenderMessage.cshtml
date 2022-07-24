@@ -1,0 +1,11 @@
+﻿@model MyAbilityFirst.Models.MessageViewModel
+<div class="talk-bubble tri-right round right-in">
+	<div class="talktext">
+		<strong>@Model.SenderUserName :</strong>
+		<br />
+		@Model.Message
+		<br />
+		(@Model.Timestamp.ToString())
+	</div>
+</div>
+<img src="@Model.SenderPictureURL" class="round rightchatprofilepic" />

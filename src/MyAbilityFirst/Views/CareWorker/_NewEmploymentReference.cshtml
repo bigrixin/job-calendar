@@ -1,0 +1,29 @@
+﻿@model MyAbilityFirst.Models.CareWorkerDetailsViewModel
+
+<div>
+	@Html.HiddenFor(model => model.EmploymentReferences[Model.EmploymentReferences.Count() - 1].ID)
+	@Html.HiddenFor(model => model.EmploymentReferences[Model.EmploymentReferences.Count() - 1].CareWorkerID)
+
+	<div class="form-group">
+		@Html.LabelFor(model => model.EmploymentReferences[Model.EmploymentReferences.Count() - 1].Description, htmlAttributes: new { @class = "control-label col-md-3" })
+		<div class="col-md-9">
+		@Html.TextAreaFor(model => model.EmploymentReferences[Model.EmploymentReferences.Count() - 1].Description, htmlAttributes: new { @class = "form-control", @Rows = 4 })
+		@Html.ValidationMessageFor(model => model.EmploymentReferences[Model.EmploymentReferences.Count() - 1].Description, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.EmploymentReferences[Model.EmploymentReferences.Count() - 1].Description)
+	</div>
+</div>
+</div>
+<div id="div-new-employment-reference">
+	<div class="col-md-12">
+		<button id="btn-add-employment-reference" type="button" class="btn btn-default"
+						onclick="AJAXPostReplace(
+					'@(Url.Action("NewEmploymentReference", "CareWorker", null))',
+					{EmploymentReferences: @Json.Encode(Model.EmploymentReferences)},
+					'#btn-add-employment-reference',
+					'#div-new-employment-reference',
+					[]
+					)">
+			<i class="glyphicon glyphicon-plus"></i> Add Employment Reference
+		</button>
+	</div>
+</div>

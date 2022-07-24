@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<body>
+	<p>
+		Hi @Model.ClientFirstName,
+	</p>
+
+	<p>
+		@Model.CarerFirstName has a replaced request that approved by coordinator, you will find a new booking that service by other Carer.
+	</p>
+
+	<p>
+		<a href="@Model.CallbackURL/client/booking/?bookingId=@Model.BookingID">View the details here</a>.
+	</p>
+
+	<p>
+		Regards,<br />
+		My Ability First
+	</p>
+</body>

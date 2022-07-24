@@ -1,0 +1,73 @@
+﻿@model IEnumerable<MyAbilityFirst.Models.JobViewModel>
+@{
+	ViewBag.Title = "Index";
+}
+
+<div class="navbar-left">
+    @Html.Action("_MyAccountSidebar", "MyAccount")
+</div>
+
+<div class="main-content-wrapper">
+    <div class="row">
+        <div class="col-md-12">
+	<h1>Job list</h1>
+
+					<div class="card card-solid">
+	<table class="table">
+		<tr>
+			<th>Patient</th>
+			<th>Title</th>
+			<th>Description</th>
+			<th>Address</th>
+			<th>Gender</th>
+			<th>Service</th>
+			<th>Start Date</th>
+			<th>Picture</th>
+			<th></th>
+		</tr>
+
+		@foreach (var item in Model)
+		{
+		<tr>
+			<td>
+				@{if (item.PatientId != 0)
+					{
+					@Html.ActionLink(item.PatientDropDownList.FirstOrDefault(s => s.Value == item.PatientId.ToString()).Text, "myaccount", "patient", new { id = item.PatientId }, null)
+					}
+				}
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Title)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Description)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Address.FullAddress)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.GenderDropDownList.FirstOrDefault(g => g.Value == item.GenderId.ToString()).Text)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.ServiceDropDownList.FirstOrDefault(s => s.Value == item.ServiceId.ToString()).Text)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.ServicedAt)
+			</td>
+			<td>
+				@if (!String.IsNullOrEmpty(item.PictureURL))
+				{
+				<img src="@Url.Content(item.PictureURL)" height="100" width="100">
+				}
+			</td>
+			<td>
+				@Html.ActionLink("Edit", "Edit", new { id = item.Id })<br />
+				@Html.ActionLink("Details", "Details", new { id = item.Id })<br />
+				@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+			</td>
+		</tr>
+}
+	</table>
+</div>        </div>
+    </div>
+</div>

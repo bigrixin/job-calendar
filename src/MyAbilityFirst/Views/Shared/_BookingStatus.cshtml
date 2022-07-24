@@ -1,0 +1,25 @@
+﻿@model MyAbilityFirst.Domain.BookingStatus
+
+@switch (@Model.ToString())
+{
+	case "Accepted":
+	<span class="label label-success">@Model.ToString()</span>
+		break;
+	case "Rejected":
+	<span class="label label-danger">@Model.ToString()</span>
+		break;
+	case "Completed":
+	<span class="label label-info">@Model.ToString()</span>
+		break;
+	case "Cancelled":
+	<span class="label label-default">@Model.ToString()</span>
+		break;
+	case "Requested":
+	<span class="label label-warning">New</span>
+		break;
+	default:
+	<span><b> @Model.ToString()</b></span>
+		break;
+}
+
+

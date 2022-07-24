@@ -1,0 +1,92 @@
+﻿@model MyAbilityFirst.Models.CoordinatorDetailsViewModel
+@{
+	ViewBag.Title = "Coordinator Profile";
+}
+
+<style>
+	.container-fluid {
+		padding: 0px;
+	}
+</style>
+<div class="container-fluid">
+	<div class="navbar-left">
+		@Html.Partial("_LeftSideMenu")
+	</div>
+	<div class="main-content-wrapper">
+		<h4>Coordinator Profile</h4>
+		<hr />
+		<p>
+			@Html.ActionLink("Edit", "EditProfile", null, new { @class = "btn btn-success btn-large" })
+		</p>
+		<dl class="dl-horizontal">
+			<dt>
+				@Html.DisplayNameFor(model => model.FirstName)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.FirstName)
+			</dd>
+
+			<dt>
+				@Html.DisplayNameFor(model => model.LastName)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.LastName)
+			</dd>
+
+			<dt>
+				@Html.DisplayNameFor(model => model.DoB)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.DoB)
+			</dd>
+			<dt>
+				@Html.DisplayNameFor(model => model.Gender)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.Gender)
+			</dd>
+			<dt>
+				@Html.DisplayNameFor(model => model.Email)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.Email)
+			</dd>
+
+			<dt>
+				@Html.DisplayNameFor(model => model.Phone)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.Phone)
+			</dd>
+
+			<dt>
+				@Html.DisplayNameFor(model => model.OrganisationID)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.OrganisationDropDownList.FirstOrDefault(s => s.Value == model.OrganisationID.ToString()).Text)
+			</dd>
+
+			<dt>
+				@Html.DisplayNameFor(model => model.StartingDate)
+			</dt>
+
+			<dd>
+				@{ if (Model.StartingDate != null)
+					{
+					@Convert.ToDateTime(Model.StartingDate).ToString("dd MMM yyyy")
+					}
+				}
+			</dd>
+		</dl>
+
+	</div>
+
+</div>
+

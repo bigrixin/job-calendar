@@ -1,0 +1,384 @@
+﻿@model MyAbilityFirst.Models.NewJobViewModel
+@using System.Collections.Generic;
+@using MyAbilityFirst.Domain
+
+@{
+	ViewBag.Title = "Create New Job";
+}
+
+<style>
+	h2 {
+		font-size: 22px;
+	}
+
+	hr {
+		margin-top: 5px;
+		margin-bottom: 5px;
+	}
+
+	.job-lable {
+		font-size: 12px;
+	}
+
+	.job-padding {
+		padding-bottom: 5px;
+		padding-top: 5px;
+	}
+
+	.button_day .button_patientname {
+		padding: 3px;
+		font-size: 12px;
+	}
+
+	.color-title {
+		font-size: 12px;
+		color: green;
+		font-weight: bold;
+	}
+
+	#datepicker {
+		width: 180px;
+		margin: 0 20px 20px 20px;
+	}
+
+		#datepicker > span:hover {
+			cursor: pointer;
+		}
+</style>
+
+<script src="~/Scripts/moment-recur.js"></script>
+<script src="~/Scripts/Shared/new-job.js"></script>
+<script src="~/Scripts/Shared/job-calendar.js"></script>
+
+<div class="container-fluid col-mod-12 col-lg-12 col-xs-12 col-sm-12">
+	<div class="col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8  col-sm-offset-2 col-sm-8">
+		<h2>Post a Job</h2>
+		<span class="job-lable">Complete the form below to create a new job post.</span>
+		<br />
+		<hr />
+		<br />
+		@using (Html.BeginForm("create-new-job", "Job", FormMethod.Post, new { enctype = "multipart/form-data", id = "jobform" }))
+		{
+		@Html.HiddenFor(model => model.ID)
+			@Html.HiddenFor(model => model.ClientID)
+			@Html.HiddenFor(model => model.PatientID)
+			@Html.HiddenFor(model => model.EventsDate)
+			@Html.Hidden("request-url", Url.Action("GetPatientInfo", "Job"))
+			@Html.Hidden("calendar-url", Url.Action("GetExistingSchedules", "Job"))
+			@Html.AntiForgeryToken()
+			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+			<div class="row">
+
+				<div class="col-md-3">
+					<span style="font-size:medium;">Job Details</span> <span class="fa fa-info-circle" style="cursor:pointer" data-toggle="modal" data-target="#infoModal"></span><br />
+					<span>Use the form to outline the job details</span>
+					<div id="patientinfo"></div>
+				</div>
+
+				<div class="card card-solid col-md-9 job-lable row">
+
+					<div class="row job-padding">
+						<div class="col-md-12" id="patients-container">
+							@Html.LabelFor(model => model.PatientID, new { @class = "job-label" })<br />
+							@{
+								var i = 0;
+								foreach (var element in Model.PatientDropDownList)
+								{
+								<div class="btn-group" data-toggle="buttons" style="padding:3px;">
+									<label class="btn btn-default button_patientname">
+										@Html.CheckBoxFor(model => model.SelectedPatients[i], new { @id = "patientid" + element.Value }) <span> @element.Text</span>
+									</label>
+								</div>
+									i++;
+								}
+							}
+							@Html.DropDownListFor(model => model.PatientIDs, (MultiSelectList)Model.PatientDropDownList, new { @class = "form-control", style = "height:0px; padding:0px; margin:0; visibility:hidden;", multiple = "multiple" })
+							@Html.ValidationMessageFor(model => model.PatientIDs, "", new { @class = "text-danger", @id = "patientvalidation" })
+						</div>
+
+					</div>
+
+
+					<div class="row job-padding">
+						<div class="col-md-6">
+							@Html.LabelFor(model => model.Title, new { @class = "job-label" })<br />
+							@Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @id = "job-title", @required = "required", @placeholder = "eg.Personal Care Worker" } })
+							@Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+						</div>
+
+						<div class="col-md-6">
+							@Html.LabelFor(model => model.PreferredGenderID, new { @class = "job-label" })<br />
+							@Html.DropDownListFor(model => model.PreferredGenderID, Model.GenderDropDownList, new { @class = "form-control", @id = "gender-preference" })
+							@Html.ValidationMessageFor(model => model.PreferredGenderID, "", new { @class = "text-danger" })
+						</div>
+
+					</div>
+					<div class="row job-padding">
+						<div class="col-md-12">
+							@Html.LabelFor(model => model.Description, new { @class = "job-label" })<br />
+							@Html.TextAreaFor(model => model.Description, htmlAttributes: new { @class = "form-control", @Rows = 5, @required = "required", @id = "job-description", @placeholder = "Provide as much detail as posssible, e.g. I am looking for a personal care worker to help my son with showering and dressing on Monday, Wednesdays and Fridays in Geeung between 9:00am and 3:00pm" })
+							@Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+						</div>
+					</div>
+
+					<div class="row job-padding">
+						<div class="col-md-6 col-sm-6">
+							@Html.LabelFor(model => model.Address)
+						</div>
+						<div class="col-md-6 col-sm-6 same-patient-profile" style="text-align:right;  margin-bottom: 2px;" hidden="hidden">
+							@Html.LabelFor(model => model.AddressSameProfile, new { htmlAttributes = new { @class = "form-control job-lable" } })
+							@Html.CheckBoxFor(model => model.AddressSameProfile, new { @class = "job-lable", @id = "address-selecting", @style = "cursor:pointer; vertical-align: middle;" })
+						</div>
+
+						<div class="col-md-12 address-request collappse in">
+							@Html.EditorFor(model => model.Address, "Address", new { @class = "form-control", @id = "input-address", @placeholder = "eg. 1 Martin PI, Sydney NSW 2000" })
+							@Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger", @id = "addressvalidation" })
+						</div>
+					</div>
+
+					<div class="row job-padding">
+						<div class="col-md-6">
+							<span><b>Is this job reoccuring?</b></span>
+						</div>
+						<div class="col-md-6" style="text-align:right; ">
+							@Html.CheckBoxFor(model => model.Recurring, new { @data_toggle = "toggle", @data_size = "mini", @data_on = "Yes", @data_off = "No", @data_onstyle = "success", @id = "recurring-switch", @checked = "@Model.Recurring" })
+						</div>
+					</div>
+					<hr />
+
+					<!-- begin no-recurring -->
+					<div class="row job-padding no-recurring collapse in">
+						<div class="col-md-4 col-sm-4">
+							<div class="form-group">
+								@Html.LabelFor(model => model.StartDate)<br />
+								<div class="input-group date" id="datepicker-jobdate">
+									@Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control job-startdate", @required = "required", @placeholder = "dd/mm/yyyy" } })
+									<span class="input-group-addon">
+										<i class="glyphicon glyphicon-calendar"></i>
+									</span>
+								</div>
+								@Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<div class='col-sm-4 col-md-4'>
+							<div class="form-group">
+								@Html.LabelFor(model => model.StartTime)<br />
+								<div class='input-group date' id='timepicker-jobstart'>
+									@Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control job-starttime", @required = "required", @placeholder = "hh:mm" } })
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-time"></span>
+									</span>
+								</div>
+								@Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<div class='col-sm-4 col-md-4'>
+							<div class="form-group">
+								@Html.LabelFor(model => model.EndTime)<br />
+								<div class='input-group date' id='timepicker-jobend'>
+									@Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control job-endtime", @required = "required", @placeholder = "hh:mm" } })
+									<span class="input-group-addon">
+										<span class="glyphicon glyphicon-time"></span>
+									</span>
+								</div>
+								@Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
+							</div>
+						</div>
+					</div>
+					<!-- end no-recurring -->
+					<!--begin recurring-->
+					<div class="row job-padding recurring-monthly collapse">
+						<div class="col-md-12 col-sm-12" style="margin-bottom:15px; padding-left:0;">
+							<div class="col-md-6 col-sm-6">
+								@Html.LabelFor(model => model.Frequency, new { @class = "job-label" })
+								@Html.DropDownListFor(model => model.Frequency, new List<SelectListItem>
+								 {
+										new SelectListItem{ Text="Weekly", Value = ScheduleType.Weekly.ToString() },
+										new SelectListItem{ Text="Monthly", Value = ScheduleType.Monthly.ToString() }
+								 }, new { @class = "form-control", @id = "frequency-selecting" })
+
+							</div>
+							<div class="col-md-6 col-sm-6 job-padding"></div>
+						</div>
+						<div class="row job-padding">
+							<!--begin monthly recurring-->
+							<div class="job-padding col-md-12 col-sm-12 frequency-monthly  collapse">
+								<div class="col-md-12 col-sm-12" style="text-align:center; ">
+									@Html.LabelFor(model => model.SequenceMonthly, new { @class = "job-label jab-sequence" })
+									@Html.EditorFor(model => model.SequenceMonthly, new { htmlAttributes = new { @Value = "1", @min = "1", @max = "12", @style = "width: 40px; height:28px;cursor:pointer; text-align: center; ", @id = "sequence-monthly", @title = "1 ~ 12" } })
+									<span><b>Month/s</b> </span>
+
+									<span>&nbsp; &nbsp; </span>
+									@Html.LabelFor(model => model.FrequencyMonthly, new { @class = "job-label jab-sequence" })
+									@Html.DropDownListFor(model => model.FrequencyMonthly, Model.FrequencyMonthlyList, new { @style = "width: 68px; height:28px", @id = "frequency-monthly" })
+
+									@Html.EditorFor(model => model.Day, new { htmlAttributes = new { @Value = "1", @min = "1", @max = "31", @style = "width: 40px; height:28px; text-align: center; ", @id = "day-monthly", @title = "1 ~ 31" } })
+									@Html.DropDownListFor(model => model.DayofWeeks, Model.DayofWeekActionList, null, new { @style = "width: 110px; height:28px; display: none;", @id = "dayofweek-monthly" })
+
+								</div>
+							</div>
+							<!--end monthly recurring-->
+							<!--begin weekly recurring-->
+							<div class="job-padding col-md-12 col-sm-12 frequency-weekly  collapse in">
+								<div class="col-md-12 col-sm-12" style="text-align:center;">
+									@Html.LabelFor(model => model.SequenceWeekly, new { @class = "job-label jab-sequence" })
+									@Html.EditorFor(model => model.SequenceWeekly, new { htmlAttributes = new { @Value = "1", @min = "1", @max = "99", @style = "width: 40px; height:28px; text-align: center; ", @id = "sequence-weekly", @title = "1 ~ 99" } })
+									<span><b>Week/s</b> </span>
+
+									<!-- begin week selecting -->
+									<span>&nbsp; &nbsp;<b>On</b></span>
+									<div class="btn-group" data-toggle="buttons" id="dayofweek-container">
+										@{
+											var j = 0;
+											foreach (var element in Model.DayofWeekDropdownList)
+											{
+											<label class="btn btn-default button_day" style="padding:2px 4px 2px 4px;min-width:30px">
+												@Html.CheckBoxFor(model => model.SelectedDayofWeek[j], new { @id = "dayofweek" + j, @title = @element.Text }) <span> @element.Text.Substring(0, 3)</span>
+
+											</label>
+												j++;
+											}
+										}
+
+									</div>
+									<br />
+									@Html.ValidationMessageFor(model => model.SelectedDayofWeek, "", new { @class = "text-danger", @id = "dayofweekvalidation" })
+									<!-- end week selecting -->
+								</div>
+							</div>
+
+							<!--end weekly recurring-->
+						</div>
+						<br />
+
+
+						<div class='col-sm-6 col-md-6'>
+							@Html.LabelFor(model => model.RecurringStartTime)<br />
+							<div class='input-group date' id='timepicker-jobstart-recurring'>
+								@Html.EditorFor(model => model.RecurringStartTime, new { htmlAttributes = new { @class = "form-control job-starttime", @placeholder = "hh:mm" } })
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-time"></span>
+								</span>
+							</div>
+							@Html.ValidationMessageFor(model => model.RecurringStartTime, "", new { @class = "text-danger" })
+							<br />
+						</div>
+
+						<div class='col-sm-6 col-md-6'>
+							@Html.LabelFor(model => model.RecurringEndTime)
+							<div class='input-group date' id='timepicker-jobend-recurring'>
+								@Html.EditorFor(model => model.RecurringEndTime, new { htmlAttributes = new { @class = "form-control job-endtime", @placeholder = "hh:mm" } })
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-time"></span>
+								</span>
+							</div>
+							@Html.ValidationMessageFor(model => model.RecurringEndTime, "", new { @class = "text-danger" })
+
+						</div>
+						<div class="col-md-12 col-sm-12 col-lg-12 "><br /></div>
+						<div class="col-md-6 col-sm-6">
+							@Html.LabelFor(model => model.RecurringStartDate)
+							<div class='input-group date' id='datepicker-jobstart-recurring'>
+								@Html.EditorFor(model => model.RecurringStartDate, new { htmlAttributes = new { @class = "form-control job-startdate", @placeholder = "dd/mm/yyyy" } })
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+							@Html.ValidationMessageFor(model => model.RecurringStartDate, "", new { @class = "text-danger", @style = "width:30px; padding-bottom:80px" })
+							<br />
+						</div>
+						<div class='col-sm-6 col-md-6'>
+							<div id="enddate-container">
+								@Html.LabelFor(model => model.RecurringEndDate):
+								@Html.RadioButtonFor(m => m.EndDateOption, "none", new { @class = "job-label", @style = "cursor:pointer; margin:0px", @id = "enddate-none" ,@title= "Three years limited data display on calendar." }) None<span>&nbsp;</span>
+								@Html.RadioButtonFor(m => m.EndDateOption, "after", new { @class = "job-label", @style = "cursor:pointer; margin:0px", @id = "enddate-after" }) After<span>&nbsp;</span>
+								@Html.RadioButtonFor(m => m.EndDateOption, "endby", new { @class = "job-label", @checked = "checked", @style = "cursor:pointer; margin:0px", @id = "enddate-by" }) By
+							</div>
+
+							<div id="occurrence" style="display: none; padding-top:2px; padding-left:2px">
+								@Html.EditorFor(model => model.Occurrences, new { htmlAttributes = new { @Value = "1", @min = "1", @max = "99", @style = "width: 40px; height:28px; text-align: center;  ", @id = "occurrence-recurring", @title = "1 ~ 99" } })
+								@Html.LabelFor(model => model.Occurrences, new { @class = "job-label jab-sequence" })
+							</div>
+							<div class='input-group date' id='datepicker-jobend-recurring'>
+								@Html.EditorFor(model => model.RecurringEndDate, new { htmlAttributes = new { @class = "form-control job-enddate", @placeholder = "dd/mm/yyyy" } })
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+							@Html.ValidationMessageFor(model => model.RecurringEndDate, "", new { @class = "text-danger", id = "enddatevalidation" })
+						</div>
+					</div>
+					<!--end recurring-->
+				</div>
+			</div>
+			<hr />
+			<br />
+		 
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 ">
+						<div class="col-md-2 col-sm-2 col-xs-2 col-lg-2" style="text-align:left;margin:0;padding-right:0">
+							@Html.ActionLink("Cancel", "Jobs", null, null, new { @class = "btn btn-default btn-sm" })
+						</div>
+
+						<div class="col-md-10 col-sm-10 col-xs-10 col-lg-10" style="text-align:right;margin:0;padding:0">
+							<button id="calendarbtn" type="button" disabled class="btn btn-default btn-sm" data-toggle="modal" data-target="#calendarModal"> Calendar</button>
+							<input type="submit" value="Save" id="submitcheck" class="btn btn-default btn-sm" />
+							<button type="button" name="preview" id="previewbtn" disabled class="btn btn-success btn-sm" data-toggle="modal" data-target="#newJobPreview" data-previewtitle="Job Preview Only">Preview Job</button>
+						</div>
+					</div>
+				</div>
+		 
+				@Html.Partial("_JobPreview", Model);
+				}
+			</div>
+</div>
+
+<!-- Info Modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="modalLabel">Information</h4>
+			</div>
+			This is information page .....
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Calendar Modal -->
+<div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="modalLabel">Calendar</h4>
+			</div>
+			<div id="calendar" class="modal-body">
+			</div>
+			<div class="modal-footer">
+				<input type="checkbox" checked data-toggle="toggle" data-width="80" data-size="small" data-on="Visible" data-off="Invisible" data-onstyle="success" id="existingjob-switch">
+				<button type="button" class="btn btn-default btn-sm" data-dismiss="modal" style="width:80px">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Calendar dialog  -->
+<div id="eventContent" title="Event Details" style="display:none;">
+	<p>
+		<br />
+		<b>Start: </b><span id="startTime"></span><br>
+		<b>End: </b><span id="endTime"></span><br>
+		<b>Location: </b> <span id="eventLocation"></span><br>
+	</p>
+</div>
+
+@section Scripts {
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLAHAeG9pD0ARapCn2AbSAcbYXaX0dUhQ&libraries=places"></script>
+}
+
+

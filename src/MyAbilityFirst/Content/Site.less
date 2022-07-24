@@ -1,0 +1,189 @@
+﻿@concrete: #f2f2f2;
+@alabaster: #f8f8f8;
+@alto: #d2d2d2;
+@mercury: #e8e8e8;
+@white: #ffffff;
+
+@mineShaft: #222222;
+
+@prussianBlue: #0b3c5d;
+@skyBlue: #328cc1;
+@gold: #cda34F;
+
+html {
+    height: 100%;
+}
+body {
+    background: @alabaster;
+    height: 100%;
+    padding-top: 70px;
+}
+
+/* Set padding to keep content from hitting the edges. */
+.body-content {
+    padding-right: 15px;
+    padding-left: 15px;
+    position: relative;
+    padding-bottom: 65px;
+    height: 100%;
+    height: auto !important;
+    min-height: 100%;
+}
+
+/* Allow only vertical resizing of textareas. */
+textarea {
+    resize: vertical;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: @skyBlue;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+hr {
+    border-color: @alto;
+}
+
+footer {
+    position: relative;
+    background: @mineShaft;
+    color: @white;
+    width: 100%;
+    padding: 8px;
+    margin-top: -36px;
+    z-index: 2;
+}
+
+.navbar-main {
+    background-color: @prussianBlue;
+
+    .navbar-brand {
+        color: @gold;
+    }
+    .navbar-nav li a {
+        color: @white;
+    }    
+    .navbar-nav li .dropdown-menu {
+        background: @concrete;
+
+        li a {
+            color:@prussianBlue;
+        }
+    }
+}
+
+.navbar-left {
+    position: fixed;
+    top: 51px;
+    bottom: 0px;
+    left: 0px;
+    width:300px;
+    padding: 0 20px;
+    background-color: @mercury;
+    transition: width 0.3s ease-in-out;
+
+    h4 {
+        font-weight:normal;
+    }
+    .active {
+        background: @alabaster;
+        padding: 20px;
+        margin: -20px;
+    }
+}
+
+.nav-tabs.nav-wizard {
+    border: none;
+
+    li {
+        a,
+        a:focus,
+        a:hover {
+            border: none;
+            border-radius: 0px;
+        }
+
+        &:not(:last-child) a {
+            margin-right: 3px;
+        }
+
+        &:first-child a:hover {
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+
+        &:last-child a:hover {
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+    }
+}
+
+.main-content-wrapper {
+    padding-left: 300px;
+}
+
+.bottom-buffer-10 {
+	padding-bottom: 10px;
+}
+
+.bottom-buffer-20 {
+	padding-bottom: 20px;
+}
+
+.dl-horizontal dd {
+    margin-bottom: 15px;    
+}
+
+.card {
+    padding: 20px;
+    border-radius: 5px;
+
+    &.card-solid {
+        background: @white;
+    }
+}
+
+input[type=checkbox] {
+    & + label, + input + label {
+        min-height: 20px;
+        padding: 0px 25px 1px 3px;
+        margin-bottom: 6px;
+        font-weight: normal;
+        cursor: pointer;
+        transform: translateY(-2px);
+    }
+}
+
+.geocomplete-details {
+    display:none;
+}
+
+form.non-editable {
+  position: relative;
+}
+
+form.non-editable:after {
+  content: " ";
+  width: 100%;
+  height: 100%;
+  background: hsl(0, 0%, 0%);
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.2;
+  z-index: 99;
+  border-radius: 4px;
+}
+
+sup {
+  vertical-align: super;
+  position: relative;
+  top: -0.4em;
+}
+
+@import (less) "PagedList.css";
+
+@import (less) "bootstrap-tagsinput.css";

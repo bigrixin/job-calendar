@@ -1,0 +1,325 @@
+﻿@using MvcCheckBoxList.Model
+@model MyAbilityFirst.Models.SearchViewModel
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+	
+	<div class="col-md-3">
+
+		<div class="category-tabs col-md-12" data-toggle="collapse" data-target="#gender-filters" aria-hidden="true">
+			<label>Gender</label> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			<div class="collapse" id="gender-filters">
+				@{ var htmlListInfoForGender = new HtmlListInfo(HtmlTag.table, 1, new
+					{
+						@class = "checkBoxListStyle",
+						@style = "display: inline;",
+						@label = "Gender: "
+					}, TextLayout.Default, TemplateIsUsed.No);}
+				@Html.CheckBoxListFor(
+				model => model.PostedGenderIDs,
+				model => model.GenderList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousGenderList,
+				htmlListInfoForGender)
+			</div>
+		</div>
+		<div class="category-tabs col-md-12" data-toggle="collapse" data-target="#backgroundchecks-filters" aria-hidden="true">
+			<label>Background Checks</label> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			<div class="collapse" id="backgroundchecks-filters">
+				@{ var htmlListInfoForVerificationChecks = new HtmlListInfo(HtmlTag.table, 1, new
+					{
+						@class = "checkBoxListStyle",
+						@style = "display: inline;",
+						@label = "Background Checks: "
+					}, TextLayout.Default, TemplateIsUsed.No);}
+				@Html.CheckBoxListFor(
+				model => model.PostedSubcategoryIDs,
+				model => model.VerificationChecksList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousVerificationChecksList,
+				htmlListInfoForVerificationChecks)
+			</div>
+		</div>
+		<div class="category-tabs col-md-12" data-toggle="collapse" data-target="#other-filters" aria-hidden="true">
+			<label>Other Preferences</label> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			<div class="collapse" id="other-filters">
+				@{ var htmlListInfoForOtherPreference = new HtmlListInfo(HtmlTag.table, 1, new
+					{
+						@class = "checkBoxListStyle",
+						@style = "display: inline;",
+						@label = "Other Preferences: "
+					}, TextLayout.Default, TemplateIsUsed.No);}
+				@Html.CheckBoxListFor(
+				model => model.PostedSubcategoryIDs,
+				model => model.OtherPreferenceList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousOtherPreferenceList,
+				htmlListInfoForOtherPreference)
+			</div>
+		</div>
+
+
+		<div class="category-tabs col-md-12" data-toggle="collapse" data-target="#nursing-filters" aria-hidden="true">
+			<label>Nursing</label> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			<div class="collapse" id="nursing-filters">
+				@{ var htmlListInfoForNursing = new HtmlListInfo(HtmlTag.table, 1, new
+					{
+						@class = "checkBoxListStyle",
+						@style = "display: inline;",
+						@label = "Nursing: "
+					}, TextLayout.Default, TemplateIsUsed.No);}
+				@Html.CheckBoxListFor(
+				model => model.PostedSubcategoryIDs,
+				model => model.NursingQualificationsList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousNursingQualificationsList,
+				htmlListInfoForNursing)
+			</div>
+		</div>
+		<div class="category-tabs col-md-12" data-toggle="collapse" data-target="#personalcare-filters" aria-hidden="true">
+			<label>Personal Care</label> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			<div class="collapse" id="personalcare-filters">
+				@{ var htmlListInfoForPersonalCare = new HtmlListInfo(HtmlTag.table, 1, new
+					{
+						@class = "checkBoxListStyle",
+						@style = "display: inline;",
+						@label = "Personal Care: "
+					}, TextLayout.Default, TemplateIsUsed.No);}
+				@Html.CheckBoxListFor(
+				model => model.PostedSubcategoryIDs,
+				model => model.PersonalCareQualificationsList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousPersonalCareQualificationsList,
+				htmlListInfoForPersonalCare)
+			</div>
+		</div>
+		<div class="category-tabs col-md-12" data-toggle="collapse" data-target="#socialdomestic-filters" aria-hidden="true">
+			<label>Social and Domestic Care</label> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			<div class="collapse" id="socialdomestic-filters">
+				@{ var htmlListInfoForOtherQualifications = new HtmlListInfo(HtmlTag.table, 1, new
+					{
+						@class = "checkBoxListStyle",
+						@style = "display: inline;",
+						@label = "Social and Domestic Care: "
+					}, TextLayout.Default, TemplateIsUsed.No);}
+				@Html.CheckBoxListFor(
+				model => model.PostedSubcategoryIDs,
+				model => model.OtherQualificationsList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousOtherQualificationsList,
+				htmlListInfoForOtherQualifications)
+			</div>
+		</div>
+
+		<div class="category-tabs col-md-12" data-toggle="collapse" data-target="#disabilitycare-filters" aria-hidden="true">
+			<label>Disability Care</label> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			<div class="collapse" id="disabilitycare-filters">
+				@{ var htmlListInfoForDisabilityCare = new HtmlListInfo(HtmlTag.table, 1, new
+					{
+						@class = "checkBoxListStyle",
+						@style = "display: inline;",
+						@label = "Disability Care: "
+					}, TextLayout.Default, TemplateIsUsed.No);}
+				@Html.CheckBoxListFor(
+				model => model.PostedSubcategoryIDs,
+				model => model.DisabilityCareExperienceList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousDisabilityCareExperienceList,
+				htmlListInfoForDisabilityCare)
+			</div>
+		</div>
+		<div class="category-tabs col-md-12" data-toggle="collapse" data-target="#mentalhealth-filters" aria-hidden="true">
+			<label>Mental Health</label> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			<div class="collapse" id="mentalhealth-filters">
+				@{ var htmlListInfoForMentalHealth = new HtmlListInfo(HtmlTag.table, 1, new
+					{
+						@class = "checkBoxListStyle",
+						@style = "display: inline;",
+						@label = "Mental Health: "
+					}, TextLayout.Default, TemplateIsUsed.No);}
+				@Html.CheckBoxListFor(
+				model => model.PostedSubcategoryIDs,
+				model => model.MentalHealthCareExperienceList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousMentalHealthCareExperienceList,
+				htmlListInfoForMentalHealth)
+			</div>
+
+		</div>
+		<div class="category-tabs col-md-12" data-toggle="collapse" data-target="#agedcare-filters" aria-hidden="true">
+			<label>Aged Care</label> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			<div class="collapse" id="agedcare-filters">
+				@{ var htmlListInfoForAgedCare = new HtmlListInfo(HtmlTag.table, 1, new
+					{
+						@class = "checkBoxListStyle",
+						@style = "display: inline;",
+						@label = "Aged Care: "
+					}, TextLayout.Default, TemplateIsUsed.No);}
+				@Html.CheckBoxListFor(
+				model => model.PostedSubcategoryIDs,
+				model => model.AgedCareExperienceList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousAgedCareExperienceList,
+				htmlListInfoForAgedCare)
+			</div>
+		</div>
+		<div class="category-tabs col-md-12" data-toggle="collapse" data-target="#chronicconditions-filters" aria-hidden="true">
+			<label>Chronic Conditions</label> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			<div class="collapse" id="chronicconditions-filters">
+				@{ var htmlListInfoForChronicConditions = new HtmlListInfo(HtmlTag.table, 1, new
+					{
+						@class = "checkBoxListStyle",
+						@style = "display: inline;",
+						@label = "Chronic Conditions: "
+					}, TextLayout.Default, TemplateIsUsed.No);}
+				@Html.CheckBoxListFor(
+				model => model.PostedSubcategoryIDs,
+				model => model.ChronicMedicalConditionsCareExperienceList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousChronicMedicalConditionsCareExperienceList,
+				htmlListInfoForChronicConditions)
+			</div>
+		</div>
+
+		<div class="category-tabs col-md-12" data-toggle="collapse" data-target="#language-filters" aria-hidden="true">
+			<label>Language</label> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			<div class="collapse" id="language-filters">
+				@{ var htmlListInfoForLanguage = new HtmlListInfo(HtmlTag.table, 1, new
+					{
+						@class = "checkBoxListStyle",
+						@style = "display: inline;",
+						@label = "Language: "
+					}, TextLayout.Default, TemplateIsUsed.No);}
+				@Html.CheckBoxListFor(
+				model => model.PostedLanguageIDs,
+				model => model.LanguageList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousLanguageList,
+				htmlListInfoForLanguage)
+			</div>
+		</div>
+		<div class="category-tabs col-md-12" data-toggle="collapse" data-target="#culture-filters" aria-hidden="true">
+			<label>Culture</label> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			<div class="collapse" id="culture-filters">
+				@{ var htmlListInfoForCulture = new HtmlListInfo(HtmlTag.table, 1, new
+					{
+						@class = "checkBoxListStyle",
+						@style = "display: inline;",
+						@label = "Culture: "
+					}, TextLayout.Default, TemplateIsUsed.No);}
+				@Html.CheckBoxListFor(
+				model => model.PostedCultureIDs,
+				model => model.CultureList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousCultureList,
+				htmlListInfoForCulture)
+			</div>
+		</div>
+		<div class="category-tabs col-md-12" data-toggle="collapse" data-target="#religion-filters" aria-hidden="true">
+			<label>Religion</label> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			<div class="collapse" id="religion-filters">
+				@{ var htmlListInfoForReligion = new HtmlListInfo(HtmlTag.table, 1, new
+					{
+						@class = "checkBoxListStyle",
+						@style = "display: inline;",
+						@label = "Religion: "
+					}, TextLayout.Default, TemplateIsUsed.No);}
+				@Html.CheckBoxListFor(
+				model => model.PostedReligionIDs,
+				model => model.ReligionList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousReligionList,
+				htmlListInfoForReligion)
+			</div>
+		</div>
+		<div class="category-tabs col-md-12" data-toggle="collapse" data-target="#interest-filters" aria-hidden="true">
+			<label>Interest</label> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			<div class="collapse" id="interest-filters">
+				@{ var htmlListInfoForInterest = new HtmlListInfo(HtmlTag.table, 1, new
+					{
+						@class = "checkBoxListStyle",
+						@style = "display: inline;",
+						@label = "Interests: "
+					}, TextLayout.Default, TemplateIsUsed.No);}
+				@Html.CheckBoxListFor(
+				model => model.PostedSubcategoryIDs,
+				model => model.InterestList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousInterestList,
+				htmlListInfoForInterest)
+			</div>
+		</div>
+		<div class="category-tabs col-md-12" data-toggle="collapse" data-target="#personality-filters" aria-hidden="true">
+			<label>Personality</label> <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			<div class="collapse" id="personality-filters">
+				@{ var htmlListInfoForPersonality = new HtmlListInfo(HtmlTag.table, 1, new
+					{
+						@class = "checkBoxListStyle",
+						@style = "display: inline;",
+						@label = "Personality: "
+					}, TextLayout.Default, TemplateIsUsed.No);}
+				@Html.CheckBoxListFor(
+				model => model.PostedPersonalityIDs,
+				model => model.PersonalityList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousPersonalityList,
+				htmlListInfoForPersonality)
+			</div>
+		</div>
+
+	</div>
+	
+	<div class="col-md-5" style="overflow:auto">
+
+		<div class="input-group col-md-12">
+			@Html.EditorFor(model => model.SearchTerm, new { htmlAttributes = new { @class = "form-control", @id = "auto-complete-categories" } })
+			@Html.ValidationMessageFor(model => model.SearchTerm, "", new { @class = "text-danger" })
+			<div class="input-group-btn">
+				<button class="btn btn-default"><span class="fa fa-search"></span></button>
+				@Html.EnumDropDownListFor(model => model.SortOption, new { @class = "btn btn-default dropdown-toggle" })
+			</div>
+		</div>
+
+		<div class="col-md-12">
+			<input class="category-tag-area" type="text" value="" data-role="tagsinput" />
+		</div>
+
+		<div class="col-md-12">
+			<div id="map" class="form-group" style="height: 350px; width: 100%;"></div>
+		</div>
+
+		@Html.HiddenFor(model => model.SearchURL)
+		@Html.HiddenFor(model => model.Latitude)
+		@Html.HiddenFor(model => model.Longitude)
+		@Html.HiddenFor(model => model.HomeLatitude)
+		@Html.HiddenFor(model => model.HomeLongitude)
+		@Html.HiddenFor(model => model.RadiusInKm)
+
+	</div>
+	
+}
+
+<div class="col-md-4">
+	@Html.Partial("_SearchResults", Model)
+</div>
+
+@section Scripts {
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLAHAeG9pD0ARapCn2AbSAcbYXaX0dUhQ&libraries=places&callback=initSearchMap" async defer></script>
+}

@@ -1,0 +1,100 @@
+﻿@using MvcCheckBoxList.Model
+@model MyAbilityFirst.Models.ClientDetailsViewModel
+@{
+	ViewBag.Title = "MyAccount";
+}
+
+<div class="navbar-left">
+	@Html.Action("_MyAccountSidebar", "MyAccount")
+</div>
+<div class="main-content-wrapper">
+	<div class="row">
+		<div class="col-md-12">
+			<div>
+				<h1>
+					Profile
+					@Html.ActionLink("Edit", "EditProfile", "Client", null, new { @class = "btn btn-primary" })
+				</h1>
+			</div>
+			<div class="card card-solid">
+				<h3>Personal detail</h3>
+				<hr />
+				<dl class="dl-horizontal">
+					<dt>
+						@Html.DisplayNameFor(model => model.FirstName)
+					</dt>
+					<dd>
+						@Html.DisplayFor(model => model.FirstName)
+					</dd>
+					<dt>
+						@Html.DisplayNameFor(model => model.LastName)
+					</dt>
+					<dd>
+						@Html.DisplayFor(model => model.LastName)
+					</dd>
+					<dt>
+						@Html.DisplayNameFor(model => model.DoB)
+					</dt>
+					<dd>
+						@Html.DisplayFor(model => model.DoB)
+					</dd>
+					<dt>
+						@Html.DisplayNameFor(model => model.Gender)
+					</dt>
+					<dd>
+						@Html.DisplayFor(model => model.Gender)
+					</dd>
+					<dt>
+						@Html.DisplayNameFor(model => model.Email)
+					</dt>
+					<dd>
+						@Html.DisplayFor(model => model.Email)
+					</dd>
+					<dt>
+						@Html.DisplayNameFor(model => model.Phone)
+					</dt>
+					<dd>
+						@Html.DisplayFor(model => model.Phone)
+					</dd>
+					<dt>
+						@Html.DisplayNameFor(model => model.Address)
+					</dt>
+					<dd>
+						@Html.DisplayFor(model => model.Address.FullAddress)
+					</dd>
+					<dt>
+						@Html.DisplayNameFor(model => model.NotificationSettings)
+					</dt>
+					<dd>
+						@Html.DisplayFor(model => model.NotificationSettings)
+					</dd>
+
+					<dt>
+						@Html.DisplayNameFor(model => model.Disclaimers)
+					</dt>
+					<dd>
+						@Html.DisplayFor(model => model.Disclaimers)
+					</dd>
+					<dt>
+						@Html.Label("How did you hear about us?", htmlAttributes: new { @class = "control-label col-md-2" })
+					</dt>
+					<dd>
+						@Html.CheckBoxListFor(
+								model => model.PostedSubCategoryIDs,
+								model => model.MarketingInfoList,
+								item => item.ID,
+								item => item.Name,
+								model => model.PreviousMarketingInfo,
+								Position.Vertical,
+								x => new { disabled = "disabled" })
+					</dd>
+				</dl>
+			</div>
+			<div>
+				<h1 class="page-header">
+					@Html.ActionLink("Edit", "EditProfile", "Client", null, new { @class = "btn btn-default" })
+				</h1>
+			</div>
+		</div>
+	</div>
+</div>

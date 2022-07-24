@@ -1,0 +1,31 @@
+﻿@model MyAbilityFirst.Domain.ClientFunctions.NewBookingViewModel
+
+@{
+	ViewBag.Title = "Create";
+}
+
+<div class="navbar-left">
+	@Html.Action("_MyAccountSidebar", "MyAccount")
+</div>
+
+<div class="main-content-wrapper">
+	<div class="row">
+		<div class="col-md-12">
+			<h1>New booking</h1>
+			<div class="card card-solid">
+				@using (Html.BeginForm("NewBooking", "Client", FormMethod.Post, new { novalidate = "novalidate", @class = "form-horizontal" }))
+				{
+					@Html.AntiForgeryToken()
+					@Html.Partial("~/Views/Client/Booking/_EditFields.cshtml")
+
+					<div class="form-group">
+						<div class="col-md-offset-3 col-md-9">
+							<input type="submit" value="Create" class="btn btn-primary" />
+						</div>
+					</div>
+
+				}
+			</div>
+		</div>
+	</div>
+</div>

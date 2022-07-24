@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<body>
+	<p>
+		Hi @Model.CarerFirstName,
+	</p>
+
+	<p>
+		@Model.ClientFirstName has sent you a request for help. Below is the request details.
+	</p>
+
+	<p>
+		<b>Schedule:</b><br />
+		@Model.BookingStart - @Model.BookingEnd<br /><br />
+
+		<b>Message:</b><br />
+		@Model.Message
+	</p>
+
+	<p>
+		<a href="@Model.CallbackURL/careworker/booking/?bookingId=@Model.BookingID">View the request here</a> to respond.
+	</p>
+
+	<p>
+		Regards,<br />
+		My Ability First
+	</p>
+</body>

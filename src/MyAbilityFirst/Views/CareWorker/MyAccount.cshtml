@@ -1,0 +1,449 @@
+﻿@using MvcCheckBoxList.Model
+@model MyAbilityFirst.Models.CareWorkerDetailsViewModel
+@using MyAbilityFirst.Domain
+
+<div class="col-md-3">
+	@Html.Action("_MyAccountSidebar", "MyAccount")
+</div>
+
+<div class="col-md-9">
+
+	<div>
+		<h1 class="page-header">
+			Profile
+			@Html.ActionLink("Edit", "EditProfile", "CareWorker", null, new { @class = "btn btn-default" })
+		</h1>
+	</div>
+
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.FirstName)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.FirstName)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.LastName)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.LastName)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.DoB)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.DoB)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Gender)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Gender)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Email)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Email)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Phone)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Phone)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Address)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Address.FullAddress)
+		</dd>
+ 
+		<dt>
+			@Html.DisplayNameFor(model => model.LocationCoverageRadius)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.LocationCoverageRadius)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.GenderPreference)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.GenderPreference)
+		</dd>
+		
+		<dt>
+			@Html.DisplayNameFor(model => model.FirstLanguage)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.FirstLanguage)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.SecondLanguage)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.SecondLanguage)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Culture)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Culture)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Religion)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Religion)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Personality)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Personality)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.Description)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.Description)
+		</dd>
+
+		<dt>
+			@Html.Label("How did you hear about us?", htmlAttributes: new { @class = "control-label" })
+		</dt>
+
+		<dd>
+			@Html.CheckBoxListFor(
+			model => model.PostedSubCategoryIDs,
+			model => model.MarketingInfoList,
+			item => item.ID,
+			item => item.Name,
+			model => model.PreviousMarketingInfoList,
+			Position.Vertical,
+			x => new { disabled = "disabled" })
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.OrganisationID)
+		</dt>
+
+		<dd>
+			@Html.DisplayFor(model => model.OrganisationDropDownList.FirstOrDefault(s => s.Value == model.OrganisationID.ToString()).Text)
+		</dd>
+
+		<dt>
+			@Html.DisplayNameFor(model => model.StartingDate)
+		</dt>
+
+		<dd>
+			@Convert.ToDateTime(Model.StartingDate).ToString("dd MMM yyyy")
+		</dd>
+
+		<dt>
+			@Html.Label("Qualifications", htmlAttributes: new { @class = "control-label" })
+		</dt>
+
+		<dd>
+			@Html.CheckBoxListFor(
+			model => model.PostedSubCategoryIDs,
+			model => model.QualificationTypeList,
+			item => item.ID,
+			item => item.Name,
+			model => model.PreviousQualificationTypeList,
+			Position.Horizontal,
+			x => new { disabled = "disabled" })
+		</dd>
+
+		<dt>
+			@Html.Label("Nursing Qualifications", htmlAttributes: new { @class = "control-label" })
+		</dt>
+
+		<dd>
+			@Html.CheckBoxListFor(
+			model => model.PostedSubCategoryIDs,
+			model => model.NursingQualificationsList,
+			item => item.ID,
+			item => item.Name,
+			model => model.PreviousNursingQualificationsList,
+			Position.Vertical,
+			x => new { disabled = "disabled" })
+		</dd>
+
+		<dt>
+			@Html.Label("Personal Care Qualifications", htmlAttributes: new { @class = "control-label" })
+		</dt>
+
+		<dd>
+			@Html.CheckBoxListFor(
+			model => model.PostedSubCategoryIDs,
+			model => model.PersonalCareQualificationsList,
+			item => item.ID,
+			item => item.Name,
+			model => model.PreviousPersonalCareQualificationsList,
+			Position.Vertical,
+			x => new { disabled = "disabled" })
+		</dd>
+
+		<dt>
+			@Html.Label("Other Carer Qualifications", htmlAttributes: new { @class = "control-label" })
+		</dt>
+
+		<dd>
+			@Html.CheckBoxListFor(
+			model => model.PostedSubCategoryIDs,
+			model => model.OtherQualificationsList,
+			item => item.ID,
+			item => item.Name,
+			model => model.PreviousOtherQualificationsList,
+			Position.Vertical,
+			x => new { disabled = "disabled" })
+		</dd>
+
+		<dt>
+			@Html.Label("Background Checks", htmlAttributes: new { @class = "control-label" })
+		</dt>
+
+		<dd>
+			@Html.CheckBoxListFor(
+			model => model.PostedSubCategoryIDs,
+			model => model.VerificationChecksList,
+			item => item.ID,
+			item => item.Name,
+			model => model.PreviousVerificationChecksList,
+			Position.Vertical,
+			x => new { disabled = "disabled" })
+		</dd>
+
+		<dt>
+			@Html.Label("Other Preferences", htmlAttributes: new { @class = "control-label" })
+		</dt>
+
+		<dd>
+			@Html.CheckBoxListFor(
+			model => model.PostedSubCategoryIDs,
+			model => model.OtherPreferenceList,
+			item => item.ID,
+			item => item.Name,
+			model => model.PreviousOtherPreferenceList,
+			Position.Vertical,
+			x => new { disabled = "disabled" })
+		</dd>
+
+		<dt>
+			@Html.Label("Experiences", htmlAttributes: new { @class = "control-label" })
+		</dt>
+		<dd/>
+
+		<dt>
+			@Html.Label("Disability Care", htmlAttributes: new { @class = "control-label" })
+		</dt>
+
+		<dd>
+			@Html.CheckBoxListFor(
+				model => model.PostedSubCategoryIDs,
+				model => model.DisabilityCareExperienceList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousDisabilityCareExperienceList,
+				Position.Vertical,
+				x => new { disabled = "disabled" })
+		</dd>
+
+		<dt>
+			@Html.Label("Mental Health Care", htmlAttributes: new { @class = "control-label" })
+		</dt>
+
+		<dd>
+			@Html.CheckBoxListFor(
+				model => model.PostedSubCategoryIDs,
+				model => model.MentalHealthCareExperienceList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousMentalHealthCareExperienceList,
+				Position.Vertical,
+				x => new { disabled = "disabled" })
+		</dd>
+
+		<dt>
+			@Html.Label("Aged Care", htmlAttributes: new { @class = "control-label" })
+		</dt>
+
+		<dd>
+			@Html.CheckBoxListFor(
+				model => model.PostedSubCategoryIDs,
+				model => model.AgedCareExperienceList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousAgedCareExperienceList,
+				Position.Vertical,
+				x => new { disabled = "disabled" })
+		</dd>
+
+		<dt>
+			@Html.Label("Chronic Medical Care", htmlAttributes: new { @class = "control-label" })
+		</dt>
+
+		<dd>
+			@Html.CheckBoxListFor(
+				model => model.PostedSubCategoryIDs,
+				model => model.ChronicMedicalConditionsCareExperienceList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousChronicMedicalConditionsCareExperienceList,
+				Position.Vertical,
+				x => new { disabled = "disabled" })
+		</dd>
+
+		<dt>
+			@Html.Label("Interests", htmlAttributes: new { @class = "control-label" })
+		</dt>
+
+		<dd>
+			@Html.CheckBoxListFor(
+				model => model.PostedSubCategoryIDs,
+				model => model.InterestList,
+				item => item.ID,
+				item => item.Name,
+				model => model.PreviousInterestList,
+				Position.Vertical,
+				x => new { disabled = "disabled" })
+		</dd>
+
+		<dt>
+			@Html.Label("Employment History", htmlAttributes: new { @class = "control-label" })
+		</dt>
+		<dd>---------------------------------------------</dd>
+
+		@foreach (var vm in Model.EmploymentHistories)
+		{
+			<dt>@Html.DisplayNameFor(model => vm.CompanyName)</dt>
+			<dd>@Html.DisplayFor(model => vm.CompanyName)</dd>
+
+			<dt>@Html.DisplayNameFor(model => vm.PositionTitle)</dt>
+			<dd>@Html.DisplayFor(model => vm.PositionTitle)</dd>
+
+			<dt>@Html.DisplayNameFor(model => vm.StartMonth)</dt>
+			<dd>@Html.DisplayFor(model => vm.StartMonth)</dd>
+
+			<dt>@Html.DisplayNameFor(model => vm.EndMonth)</dt>
+			<dd>@Html.DisplayFor(model => vm.EndMonth)</dd>
+
+			<dt>@Html.DisplayNameFor(model => vm.Description)</dt>
+			<dd>@Html.DisplayFor(model => vm.Description)</dd>
+		}
+
+		<dt>
+			@Html.Label("Employment History", htmlAttributes: new { @class = "control-label" })
+		</dt>
+		<dd>---------------------------------------------</dd>
+
+		<dt>
+			@Html.Label("Formal Education", htmlAttributes: new { @class = "control-label" })
+		</dt>
+		<dd>---------------------------------------------</dd>
+
+		@foreach (var vm in Model.EmploymentFormalEducations)
+		{
+			<dt>@Html.DisplayName("Education Level")</dt>
+			<dd>@Html.DisplayFor(model => model.FormalEducationDropDownList.Where(ddl => ddl.Value == vm.FormalEducationID.ToString()).First().Text)</dd>
+
+			<dt>@Html.DisplayNameFor(model => vm.Description)</dt>
+			<dd>@Html.DisplayFor(model => vm.Description)</dd>
+		}
+
+		<dt>
+			@Html.Label("Formal Education", htmlAttributes: new { @class = "control-label" })
+		</dt>
+		<dd>---------------------------------------------</dd>
+
+		<dt>
+			@Html.Label("References", htmlAttributes: new { @class = "control-label" })
+		</dt>
+		<dd>---------------------------------------------</dd>
+
+		@foreach (var vm in Model.EmploymentReferences)
+		{
+			<dt>@Html.DisplayNameFor(model => vm.Description)</dt>
+			<dd>@Html.DisplayFor(model => vm.Description)</dd>
+		}
+
+		<dt>
+			@Html.Label("References", htmlAttributes: new { @class = "control-label" })
+		</dt>
+		<dd>---------------------------------------------</dd>
+
+		<dt>
+			@Html.Label("Achievements", htmlAttributes: new { @class = "control-label" })
+		</dt>
+		<dd>---------------------------------------------</dd>
+
+		@foreach (var vm in Model.EmploymentAchievements)
+		{
+			<dt>@Html.DisplayNameFor(model => vm.Description)</dt>
+			<dd>@Html.DisplayFor(model => vm.Description)</dd>
+		}
+		<dt>
+			@Html.Label("Achievements", htmlAttributes: new { @class = "control-label" })
+		</dt>
+		<dd>---------------------------------------------</dd>
+
+		<dt>
+			@Html.Label("Availability", htmlAttributes: new { @class = "control-label" })
+		</dt>
+		<dd/>
+		<dd>
+			@for (int dowindex = 0; dowindex < Model.DayOfWeekList.Count(); dowindex++)
+			{
+			<div class="form-group">
+				@Html.Label(Enum.GetName(typeof(DayOfWeek), Model.DayOfWeekList[dowindex]), htmlAttributes: new { @class = "control-label" })
+
+				@for (int todindex = 0; todindex < Model.TimeOfDayList.Count(); todindex++)
+				{
+				<div class="form-group col-md-offset-2">
+					@Html.HiddenFor(model => Model.Availabilities[(Model.TimeOfDayList.Count() * dowindex) + todindex].ID)
+					@Html.HiddenFor(model => Model.Availabilities[(Model.TimeOfDayList.Count() * dowindex) + todindex].CareWorkerID)
+					@Html.HiddenFor(model => Model.Availabilities[(Model.TimeOfDayList.Count() * dowindex) + todindex].DayOfWeek)
+					@Html.HiddenFor(model => Model.Availabilities[(Model.TimeOfDayList.Count() * dowindex) + todindex].TimeOfDay)
+					@Html.Label(Enum.GetName(typeof(TimeOfDay), Model.TimeOfDayList[todindex]), htmlAttributes: new { @class = "control-label" })
+					@Html.CheckBoxFor(c => Model.Availabilities[(Model.TimeOfDayList.Count() * dowindex) + todindex].Selected, new { @disabled = "disabled" })
+				</div>
+				}
+			</div>
+			}
+		</dd>
+
+	</dl>
+
+<div class="col-md-9">
+		@Html.ActionLink("Edit", "EditProfile", "CareWorker", null, new { @class = "btn btn-default" })
+</div>
+
+</div>

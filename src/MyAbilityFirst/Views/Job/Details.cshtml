@@ -1,0 +1,87 @@
+﻿@using MvcCheckBoxList.Model;
+@model MyAbilityFirst.Models.JobsViewModel
+@{
+	ViewBag.Title = "Details";
+}
+<style>
+	h2 {
+		font-size: 22px;
+	}
+
+	hr {
+		margin-top: 5px;
+		margin-bottom: 5px;
+	}
+
+	.job-lable {
+		font-size: 12px;
+	}
+
+	.job-padding {
+		padding-bottom: 5px;
+		padding-top: 5px;
+	}
+
+	.button_day .button_patientname {
+		padding: 3px;
+		font-size: 12px;
+	}
+
+	.color-title {
+		font-size: 12px;
+		color: green;
+		font-weight: bold;
+	}
+
+	.color-ico {
+		color: #5cb85c;
+	}
+
+	#datepicker {
+		width: 180px;
+		margin: 0 20px 20px 20px;
+	}
+
+		#datepicker > span:hover {
+			cursor: pointer;
+		}
+</style>
+
+<div class="container-fluid col-mod-12 col-lg-12 col-xs-12 col-sm-12">
+	<div class="col-md-offset-2 col-md-8 col-lg-offset-1 col-lg-9  col-sm-offset-2 col-sm-8">
+		<h2 style="color:palevioletred"><b>Sample Job Details</b></h2>
+
+		<div class="card card-solid">
+			<dl class="dl-horizontal">
+				<dt>@Html.DisplayNameFor(model => model.ID)</dt>
+				<dd>@Html.DisplayFor(model => model.ID)</dd>
+				<dt>@Html.DisplayNameFor(model => model.Title)</dt>
+				<dd>@Html.DisplayFor(model => model.Title)</dd>
+				<dt>@Html.DisplayNameFor(model => model.Description)</dt>
+				<dd>@Html.DisplayFor(model => model.Description)</dd>
+				<dt>@Html.DisplayNameFor(model => model.Address)</dt>
+				<dd>
+					<span class="glyphicon glyphicon-map-marker color-ico"> </span>
+					@Html.DisplayFor(model => model.Address.FullAddress)
+				</dd>
+				<dt>@Html.DisplayNameFor(model => model.Patients)</dt>
+				<dd>
+					<span class="glyphicon glyphicon-user color-ico"> </span>
+					<span> @Html.DisplayFor(model => model.Patients)</span>
+				</dd>
+				<dt>@Html.DisplayNameFor(model => model.Schedule)</dt>
+				<dd>
+					<span class="glyphicon glyphicon-calendar color-ico"> </span>
+					<span>@Html.DisplayFor(model => model.Schedule)</span>
+				</dd>
+			</dl>
+			<hr>
+			<div>
+				@Html.ActionLink("Back to List", "Jobs")
+			</div>
+
+			<div>
+			</div>
+		</div>
+	</div>
+</div>

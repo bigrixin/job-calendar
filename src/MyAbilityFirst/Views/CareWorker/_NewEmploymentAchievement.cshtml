@@ -1,0 +1,29 @@
+﻿@model MyAbilityFirst.Models.CareWorkerDetailsViewModel
+
+<div>
+	@Html.HiddenFor(model => model.EmploymentAchievements[Model.EmploymentAchievements.Count() - 1].ID)
+	@Html.HiddenFor(model => model.EmploymentAchievements[Model.EmploymentAchievements.Count() - 1].CareWorkerID)
+
+	<div class="form-group">
+		@Html.LabelFor(model => model.EmploymentAchievements[Model.EmploymentAchievements.Count() - 1].Description, htmlAttributes: new { @class = "control-label col-md-3" })
+		<div class="col-md-9">
+		@Html.TextAreaFor(model => model.EmploymentAchievements[Model.EmploymentAchievements.Count() - 1].Description, htmlAttributes: new { @class = "form-control", @Rows = 4 })
+		@Html.ValidationMessageFor(model => model.EmploymentAchievements[Model.EmploymentAchievements.Count() - 1].Description, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.EmploymentAchievements[Model.EmploymentAchievements.Count() - 1].Description)
+	</div>
+</div>
+</div>
+<div id="div-new-employment-achievement">
+	<div class="col-md-12">
+		<button id="btn-add-employment-achievement" type="button" class="btn btn-default"
+						onclick="AJAXPostReplace(
+					'@(Url.Action("NewEmploymentAchievement", "CareWorker", null))',
+					{EmploymentAchievements: @Json.Encode(Model.EmploymentAchievements)},
+					'#btn-add-employment-achievement',
+					'#div-new-employment-achievement',
+					[]
+					)">
+			<i class="glyphicon glyphicon-plus"></i> Add Employment Achievement
+		</button>
+	</div>
+</div>

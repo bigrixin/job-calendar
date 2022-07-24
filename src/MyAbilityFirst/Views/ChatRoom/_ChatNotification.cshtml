@@ -1,0 +1,10 @@
+﻿@model MyAbilityFirst.Models.ChatNotificationViewModel
+
+<div id="NotificationContainer@(Model.ID)" class="notificationcontainer">
+	<div id="NotificationBody" class="notificationbody" data-notificationID=@Model.ID data-read=@Model.Read>
+		<span id="chatlink" @(Model.Read ? "class=notificationgrayout " : "" ) data-roomID=@Model.RoomID>
+			@(Model.NoticeFrom) <i class="fa fa-comments" aria-hidden="true"></i> @(Model.NewMessageCount > 0 ? "(" + Model.NewMessageCount + ")" : "")
+		</span>
+	</div>
+	<i id="NotificationClose" class="fa fa-times notificationclose" data-notificationID=@Model.ID aria-hidden="true"></i>
+</div>

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<MyAbilityFirst.Models.JobViewModel>
+@{
+	ViewBag.Title = "New Jobs List";
+}
+<div class="navbar-left">
+	@Html.Action("_MyAccountSidebar", "MyAccount")
+</div>
+
+<div class="main-content-wrapper">
+	<div class="row">
+		<div class="col-md-12">
+			<h2>New Jobs List</h2>
+			<div class="card card-solid">
+				<table class="table">
+					<tr>
+						<th>Title</th>
+						<th>Descripton</th>
+						<th>Service At</th>
+					</tr>
+
+					@foreach (var item in Model)
+					{
+					<tr>
+						<td>
+							@Html.DisplayFor(modelItem => item.Title)
+						</td>
+
+						<td>
+							@{
+								if (item.Description.Length > 50)
+								{
+								@item.Description.Substring(0, 50).ToString() @:<span>...</span>
+								}
+								else
+								{
+								@Html.DisplayFor(modelItem => item.Description)
+								}
+							}
+						</td>
+						<td>
+							@Convert.ToDateTime(item.CreatedAt).ToString("dd/MMM/yyyy")
+						</td>
+						<td>
+							@Html.HiddenFor(modelItem => item.Id)
+
+							@Html.ActionLink("Details", "Job", new { bookingId = item.Id }, new { @class = "btn btn-primary btn-sm" })
+						</td>
+					</tr>
+								}
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

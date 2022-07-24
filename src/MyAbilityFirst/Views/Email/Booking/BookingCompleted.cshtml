@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<body>
+	<p>
+		Hi @Model.CarerFirstName,
+	</p>
+
+	<p>
+		@Model.ClientFirstName has completed a booking service which his or her booked on @Model.BookingStart .
+	</p>
+
+	<p>
+		<a href="@Model.CallbackURL/careworker/booking/?bookingId=@Model.BookingID">View the details here</a>.
+	</p>
+
+	<p>
+		Regards,<br />
+		My Ability First
+	</p>
+</body>

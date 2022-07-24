@@ -1,0 +1,69 @@
+﻿@model MyAbilityFirst.Models.MyAccountViewModel
+@if (Request.IsAuthenticated)
+{
+	using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+	{
+	@Html.AntiForgeryToken()
+
+		<ul class="nav navbar-nav navbar-right">
+			<li class="dropdown">
+				<a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">
+					<span class="glyphicon glyphicon-star"></span>
+					<sup id="shortlistcounter">@if (Model.Shortlists != null) {@Model.Shortlists.Count(s => s.Selected)}</sup>
+				</a>
+				<div class="dropdown-menu" role="menu">
+					@if (Model.Shortlists != null)
+					{
+						foreach (var shortlist in Model.Shortlists.Where(s => s.Selected))
+						{
+						<div class="col-md-12">
+							<a href="@Url.Action("PublicProfile", "Profile", new { id = shortlist.SelectedUserID })"> 
+								<img src=@shortlist.PictureURL class="media-object img-circle" alt="Sample Image" style="width:60px" title="see profile">
+								@shortlist.FirstName @shortlist.LastName 
+							</a>
+						</div>
+						}
+					}
+				</div>
+			</li>
+		</ul>
+
+		<ul class="nav navbar-nav navbar-right">
+			<li class="dropdown">
+				<a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">
+					<span class="glyphicon glyphicon-envelope"></span>
+					<sup id="notificationcounter">@if (Model.Notifications != null && Model.Notifications.Count(n => !n.Read) > 0) {@Model.Notifications.Count(n => !n.Read)}</sup>
+				</a>
+				<div id="Notifications" class="dropdown-menu notification" role="menu">
+					@if (Model.Notifications != null)
+					{
+						foreach (var notification in Model.Notifications)
+						{
+							@Html.Partial("~/Views/ChatRoom/_ChatNotification.cshtml", notification)
+						}
+					}
+				</div>
+			</li>
+		</ul>
+
+		<ul class="nav navbar-nav navbar-right">
+			<li class="dropdown">
+				<a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">
+					<span class="glyphicon glyphicon-user"></span>
+					@Model.UserName <span aria-hidden="true" class="caret"></span>
+				</a>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="@Url.Action("Index", "MyAccount")"><span aria-hidden="true" class="fa fa-user"></span> My Account</a></li>
+					<li><a href="javascript:document.getElementById('logoutForm').submit()"><span aria-hidden="true" class="fa fa-sign-out"></span> Log off</a></li>
+				</ul>
+			</li>
+		</ul>
+	}
+}
+else
+{
+		<ul class="nav navbar-nav navbar-right">
+			<li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+			<li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+		</ul>
+}
